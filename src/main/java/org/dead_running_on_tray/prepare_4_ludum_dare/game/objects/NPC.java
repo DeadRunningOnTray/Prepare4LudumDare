@@ -25,8 +25,19 @@ public class NPC extends Character {
         this.route = route;
     }
 
+    /**
+     * Custom constructor.
+     * Parse text file that consists of lines of pairs "x,y".
+     * These pairs are point of NPC walking route.
+     * @param x - coordinate.
+     * @param y - coordinate.
+     * @param id - NPC identification number.
+     * @param spritePath - image file path.
+     * @param routeFile - file consists of pairs "x,y".
+     */
     public NPC(int x, int y, int id, String spritePath, String routeFile) {
         super(x, y, id, spritePath);
+        route = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(routeFile)))) {
             String line = reader.readLine();
@@ -45,7 +56,7 @@ public class NPC extends Character {
         }
     }
 
-    private void nextPoint() {
+    void nextPoint() {
         currentDestination++;
 
         if (currentDestination + 1 > route.size()) {
@@ -53,35 +64,8 @@ public class NPC extends Character {
         }
     }
 
-    public void moveThroughRoute() {
-        if (Math.abs(x - route.get(currentDestination).getX()) < 1) {
-            x = route.get(currentDestination).getX();
-        }
-
-        if (Math.abs(y - route.get(currentDestination).getY()) < 1) {
-            y = route.get(currentDestination).getY();
-        }
-
-        int dx = (int) x - route.get(currentDestination).getX();
-        int dy = (int) y - route.get(currentDestination).getY();
-
-        if (dx == 0 && dy == 0) {
-            nextPoint();
-        }
-
-        if (dx > 0) {
-            move(-1, 0);
-        } else if (dx < -1) {
-            move(1, 0);
-        }
-
-        if (dy > 0) {
-            move(0, -1);
-        } else if (dy < -1) {
-            move(0, 1);
-        }
-
-        System.out.println(dx + " " + dy);
+    public Point getCurrentDestination() {
+        return route.get(currentDestination);
     }
 
     public void addPointToRoute(Point p) {

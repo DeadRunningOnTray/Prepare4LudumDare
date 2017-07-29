@@ -7,7 +7,6 @@ import static org.lwjgl.opengl.GL11.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.ILocation;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.texture.Texture;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLContext;
@@ -76,12 +75,13 @@ class Game {
         );
 
         NPCs = new ArrayList<>();
-        NPC n = new NPC(0, 0, 2, "src/main/resources/img/player/frame_1_sqr.png");
-        n.addPointToRoute(new Point(SCREEN_WIDTH / 2, 0));
-        n.addPointToRoute(new Point(0, -SCREEN_HEIGHT / 2));
-        n.addPointToRoute(new Point(-SCREEN_WIDTH / 2, 0));
-        n.addPointToRoute(new Point(0, SCREEN_HEIGHT / 2));
-        NPCs.add(n);
+        NPCs.add(new NPC(
+            0,
+            0,
+            2,
+            "src/main/resources/img/player/frame_1_sqr.png",
+            "src/main/resources/routes/test_route"
+        ));
     }
 
 
@@ -155,7 +155,7 @@ class Game {
      */
     private void processAI() {
         for (NPC npc : NPCs) {
-            npc.moveThroughRoute();
+            NpcRouteProcessor.process(npc);
         }
     }
 
