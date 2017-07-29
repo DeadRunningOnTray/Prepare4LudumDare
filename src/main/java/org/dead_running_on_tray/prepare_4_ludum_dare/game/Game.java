@@ -71,7 +71,7 @@ class Game {
             START_PLAYER_POS_X,
             START_PLAYER_POS_Y,
             1,
-            "src/main/resources/img/player/test1.png"
+            "src/main/resources/img/player/frame_1_sqr.png"
         );
 
         NPCs = new ArrayList<>();

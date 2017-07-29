@@ -56,22 +56,19 @@ public abstract class GameObject {
     public void draw() {
         sprite.bind();
 
-        float unit_width = 2 * getWidth() / SCREEN_WIDTH;
-        float unit_height = 2 * getHeight() / SCREEN_HEIGHT;
+        float unit_width = 4 * getWidth() / SCREEN_WIDTH;
+        float unit_height = 4 * getHeight() / SCREEN_HEIGHT;
 
         System.out.println(unit_width + ", " + unit_height);
 
-        float tx = 0.0F;
-        float ty = 0.0F;
-
         glBegin(GL_QUADS);
-        glTexCoord2f(tx, ty + 0.5F);
+        glTexCoord2f(0.0F, 1.0F);
         glVertex2f(0.0F, 0.0F);
-        glTexCoord2f(tx + 0.5F, ty + 0.5F);
+        glTexCoord2f(1.0F, 1.0F);
         glVertex2f(unit_width, 0.0F);
-        glTexCoord2f(tx + 0.5F, ty);
+        glTexCoord2f(1.0F, 0.0F);
         glVertex2f(unit_width, unit_height);
-        glTexCoord2f(tx, ty);
+        glTexCoord2f(0.0F, 0.0F);
         glVertex2f(0.0F, unit_height);
         glEnd();
 
