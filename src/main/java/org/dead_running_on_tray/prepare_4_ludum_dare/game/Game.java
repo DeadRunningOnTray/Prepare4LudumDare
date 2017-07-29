@@ -1,8 +1,11 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.State.*;
 
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.ILocation;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+
 /**
  * Main game class.
  */
@@ -22,7 +26,7 @@ class Game {
 
 
     private static long win;
-    private static State state = State.GAME;// Default state.
+    private static State state = GAME;// Default state.
 
     private static ILocation.Option currentLocation = ILocation.Option.START;
     private static HashMap<ILocation.Option, ILocation> locationsMap;
@@ -71,6 +75,7 @@ class Game {
             START_PLAYER_POS_X,
             START_PLAYER_POS_Y,
             1,
+            PLAYER_SCALE,
             "src/main/resources/img/player/frame_1_sqr.png"
         );
 
