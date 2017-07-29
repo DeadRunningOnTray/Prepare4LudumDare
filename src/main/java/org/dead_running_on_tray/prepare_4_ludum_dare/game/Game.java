@@ -5,7 +5,9 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.ILocation;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Player;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.texture.Texture;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLContext;
 
@@ -28,6 +30,8 @@ class Game {
     private static Player player;
     private static ArrayList<Character> NPCs;
 
+    private static Texture pauseSign;
+
 
     Game() {
         init();
@@ -36,8 +40,8 @@ class Game {
             gameLoop();
         }
 
-        glfwTerminate();
-        System.exit(0);
+        //glfwTerminate();
+        //System.exit(0);
     }
 
 
@@ -49,7 +53,7 @@ class Game {
             throw new IllegalStateException("GLFW failed to initialize!");
         }
 
-        win = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "win", 0, 0);
+        win = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE, 0, 0);
         glfwShowWindow(win);
         glfwMakeContextCurrent(win);
 
@@ -57,13 +61,20 @@ class Game {
         GL.createCapabilities(true);
         glEnable(GL_TEXTURE_2D);
 
-        //Initializing objects.
+
+        // TODO this block.
+        // Initialize pause sign sprite.
+        //pauseSign = new Texture("src/main/resources/img/pause/pause_sign.png");
+
+        // Initializing objects.
         player = new Player(
             START_PLAYER_POS_X,
             START_PLAYER_POS_Y,
             1,
-            "src/main/resources/img/player/frame_1.png"
+            "src/main/resources/img/player/test1.png"
         );
+
+        NPCs = new ArrayList<>();
     }
 
 
@@ -136,14 +147,18 @@ class Game {
     }
 
     /**
-     *
+     * Draw every game object im memory.
      */
     private void drawScene() {
+        for (Character npc : NPCs) {
+            npc.draw();
+        }
+
         player.draw();
     }
 
     /**
-     *
+     * Draw pause sign.
      */
     private void drawPauseSign() {
 
