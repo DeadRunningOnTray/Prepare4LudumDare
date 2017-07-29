@@ -28,7 +28,7 @@ public class GameFrame extends Frame {
     //private ILocation.Option currentLocation = ILocation.Option.START;
     //private HashMap<ILocation.Option, ILocation> locationsMap;
 
-    private Random random = new Random(42/*System.currentTimeMillis()*/);
+    private Random random = new Random(/*42*/System.currentTimeMillis());
 
     private int getNPCBornX() {
         return (random.nextBoolean() ? LEFT_BORN_ENEMY_SCREEN_WIDTH : RIGHT_BORN_ENEMY_SCREEN_WIDTH);
