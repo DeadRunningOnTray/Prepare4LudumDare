@@ -1,5 +1,6 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
+
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 
 import java.io.BufferedReader;
@@ -8,6 +9,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
+
+
 /**
  * Non playable character.
  */
@@ -15,13 +19,13 @@ public class NPC extends Character {
     protected ArrayList<Point> route;
     private int currentDestination = 0;
 
-    public NPC(int x, int y, int id, String spritePath) {
-        super(x, y, id, spritePath);
+    public NPC(int x, int y, int id, int scale, String spritePath) {
+        super(x, y, id, scale, spritePath);
         route = new ArrayList<>();
     }
 
-    public NPC(int x, int y, int id, String spritePath, ArrayList<Point> route) {
-        super(x, y, id, spritePath);
+    public NPC(int x, int y, int id, int scale, String spritePath, ArrayList<Point> route) {
+        super(x, y, id, scale, spritePath);
         this.route = route;
     }
 
@@ -35,8 +39,8 @@ public class NPC extends Character {
      * @param spritePath - image file path.
      * @param routeFile - file consists of pairs "x,y".
      */
-    public NPC(int x, int y, int id, String spritePath, String routeFile) {
-        super(x, y, id, spritePath);
+    public NPC(int x, int y, int id, int scale, String spritePath, String routeFile) {
+        super(x, y, id, scale, spritePath);
         route = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(routeFile)))) {

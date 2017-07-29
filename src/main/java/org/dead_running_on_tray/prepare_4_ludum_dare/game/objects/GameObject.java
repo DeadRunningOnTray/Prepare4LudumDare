@@ -16,9 +16,9 @@ public abstract class GameObject {
     /**
      * For inner using.
      */
-    private float unit_width, unit_height, normX, normY;
+    protected float unit_width, unit_height, normX, normY;
 
-    GameObject(int x, int y, int id, String spritePath) {
+    public GameObject(int x, int y, int id, int scale, String spritePath) {
         coordinates = new Point(x, y);
         this.id = id;
 
@@ -29,8 +29,8 @@ public abstract class GameObject {
             sprite = null;
         }
 
-        unit_width = 4 * getWidth() / SCREEN_WIDTH;
-        unit_height = 4 * getHeight() / SCREEN_HEIGHT;
+        unit_width = scale * getWidth() / SCREEN_WIDTH;
+        unit_height = scale * getHeight() / SCREEN_HEIGHT;
         normX = (float) x / SCREEN_WIDTH;
         normY = (float) y / SCREEN_HEIGHT;
     }
@@ -62,7 +62,12 @@ public abstract class GameObject {
     public Texture getSprite() {
         return sprite;
     }
-
+  
+// todo move "move" to GameMovingObject
+// |
+// |
+// V
+/* bewrrrie
     public void move(float dx, float dy) {
         if (inversedX && dx > 0 || dx < 0 && !inversedX) {
             inversedX = !inversedX;
@@ -73,6 +78,8 @@ public abstract class GameObject {
         normY = coordinates.getY() / SCREEN_HEIGHT;
     }
 
+=======
+ master*/
     public void draw() {
         sprite.bind();
 
