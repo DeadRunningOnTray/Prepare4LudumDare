@@ -16,7 +16,7 @@ public abstract class GameObject {
      */
     private float unit_width, unit_height, normX, normY;
 
-    GameObject(final int x, final int y, final int id, final String spritePath) {
+    GameObject(int x, int y, int id, int scale, String spritePath) {
         this.x = x;
         this.y = y;
         this.id = id;
@@ -28,8 +28,8 @@ public abstract class GameObject {
             sprite = null;
         }
 
-        unit_width = 4 * getWidth() / SCREEN_WIDTH;
-        unit_height = 4 * getHeight() / SCREEN_HEIGHT;
+        unit_width = scale * getWidth() / SCREEN_WIDTH;
+        unit_height = scale * getHeight() / SCREEN_HEIGHT;
     }
 
     public int getId() {
