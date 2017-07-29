@@ -11,6 +11,11 @@ public abstract class GameObject {
     private float x, y;
     private Texture sprite;
 
+    /**
+     * For inner using.
+     */
+    private float unit_width, unit_height, normX, normY;
+
     GameObject(final int x, final int y, final int id, final String spritePath) {
         this.x = x;
         this.y = y;
@@ -22,6 +27,9 @@ public abstract class GameObject {
             System.err.println("Error while reading sprite for game object!");
             sprite = null;
         }
+
+        unit_width = 4 * getWidth() / SCREEN_WIDTH;
+        unit_height = 4 * getHeight() / SCREEN_HEIGHT;
     }
 
     public int getId() {
@@ -48,30 +56,27 @@ public abstract class GameObject {
         return sprite;
     }
 
-    public void move(double dx, double dy) {
+    public void move(float dx, float dy) {
         x += dx;
         y += dy;
+        normX = x / SCREEN_WIDTH;
+        normY = y / SCREEN_HEIGHT;
+
+        System.out.println(x + " " + y);
     }
 
     public void draw() {
         sprite.bind();
 
-        float unit_width = 4 * getWidth() / SCREEN_WIDTH;
-        float unit_height = 4 * getHeight() / SCREEN_HEIGHT;
-
-        System.out.println(unit_width + ", " + unit_height);
-
-        glBegin(GL_QUADS);
+        glBegin(GL_POLYGON);
         glTexCoord2f(0.0F, 1.0F);
-        glVertex2f(0.0F, 0.0F);
+        glVertex2f(normX, normY);
         glTexCoord2f(1.0F, 1.0F);
-        glVertex2f(unit_width, 0.0F);
+        glVertex2f(normX + unit_width, normY);
         glTexCoord2f(1.0F, 0.0F);
-        glVertex2f(unit_width, unit_height);
+        glVertex2f(normX + unit_width, normY + unit_height);
         glTexCoord2f(0.0F, 0.0F);
-        glVertex2f(0.0F, unit_height);
+        glVertex2f(normX, normY + unit_height);
         glEnd();
-
-        //sprite.release();
     }
 }
