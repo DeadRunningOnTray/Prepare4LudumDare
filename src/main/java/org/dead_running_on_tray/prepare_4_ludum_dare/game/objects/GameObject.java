@@ -1,14 +1,14 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.texture.Texture;
 
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.UNIFIED_SPRITE_FILE_FORMAT;
-import static org.newdawn.slick.util.ResourceLoader.getResourceAsStream;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.SCREEN_HEIGHT;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.SCREEN_WIDTH;
+import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GameObject {
     private int id;
-    private double x, y;
+    private float x, y;
     private Texture sprite;
 
     GameObject(final int x, final int y, final int id, final String spritePath) {
@@ -17,9 +17,9 @@ public abstract class GameObject {
         this.id = id;
 
         try {
-            sprite = TextureLoader.getTexture(UNIFIED_SPRITE_FILE_FORMAT, getResourceAsStream(spritePath));
+            sprite = new Texture(spritePath);
         } catch (Exception e) {
-            System.err.println("Error while reading " + UNIFIED_SPRITE_FILE_FORMAT + " sprite for game object!");
+            System.err.println("Error while reading sprite for game object!");
             sprite = null;
         }
     }
@@ -37,11 +37,11 @@ public abstract class GameObject {
     }
 
     public int getWidth() {
-        return sprite.getImageWidth();
+        return sprite.getWidth();
     }
 
     public int getHeight() {
-        return sprite.getImageHeight();
+        return sprite.getHeight();
     }
 
     public Texture getSprite() {
@@ -51,5 +51,23 @@ public abstract class GameObject {
     public void move(double dx, double dy) {
         x += dx;
         y += dy;
+    }
+
+    public void draw() {
+        sprite.bind();
+
+        float unit_width = 0.7f;
+        float unit_height = 0.7f;
+
+        glBegin(GL_QUADS); {
+            glTexCoord2f(0, 0);
+            glVertex2f(-unit_width, unit_height);
+            glTexCoord2f(1, 0);
+            glVertex2f(unit_width, unit_height);
+            glTexCoord2f(1, 1);
+            glVertex2f(unit_width, -unit_height);
+            glTexCoord2f(0, 1);
+            glVertex2f(-unit_width, -unit_height);
+        } glEnd();
     }
 }

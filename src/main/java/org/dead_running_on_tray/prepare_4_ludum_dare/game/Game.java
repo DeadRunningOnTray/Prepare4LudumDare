@@ -1,7 +1,6 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game;
 
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.START_PLAYER_POS_X;
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.START_PLAYER_POS_Y;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -50,19 +49,20 @@ class Game {
             throw new IllegalStateException("GLFW failed to initialize!");
         }
 
-        win = glfwCreateWindow(800, 600, "win", 0, 0);
+        win = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "win", 0, 0);
         glfwShowWindow(win);
         glfwMakeContextCurrent(win);
 
         GLContext.createFromCurrent();
         GL.createCapabilities(true);
+        glEnable(GL_TEXTURE_2D);
 
         //Initializing objects.
         player = new Player(
             START_PLAYER_POS_X,
             START_PLAYER_POS_Y,
             1,
-            "src/main/resources/img/player/frame_1.gif"
+            "src/main/resources/img/player/frame_1.png"
         );
     }
 
@@ -139,7 +139,7 @@ class Game {
      *
      */
     private void drawScene() {
-
+        player.draw();
     }
 
     /**
