@@ -11,9 +11,8 @@ import com.sun.org.apache.xpath.internal.SourceTree;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.frame.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.frame.frame_state.FrameState;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.ILocation;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Player;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.texture.Texture;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLContext;
 
@@ -27,23 +26,14 @@ import java.util.HashMap;
  */
 class Game {
 
-
     private static long win;
     private static State state = START_FRAME;// Default state.
-
-    /*private static ILocation.Option currentLocation = ILocation.Option.START;
-    private static HashMap<ILocation.Option, ILocation> locationsMap;
-
-    private static Player player;
-    private static ArrayList<Character> NPCs;
-
-    private static Texture pauseSign;*/
 
 
 
     private Frame frame = new StartFrame();
 
-
+    StaticObject background;
 
     Game() {
         init();
@@ -72,21 +62,8 @@ class Game {
         GLContext.createFromCurrent();
         GL.createCapabilities(true);
         glEnable(GL_TEXTURE_2D);
-
-        // TODO this block.
-        // Initialize pause sign sprite.
-        // pauseSign = new Texture("src/main/resources/img/pause/pause_sign.png");
-
-        // Initializing objects.
-        /*player = new Player(
-            START_PLAYER_POS_X,
-            START_PLAYER_POS_Y,
-            1,
-            PLAYER_SCALE,
-            PLAYER_PATH
-        );
-
-        NPCs = new ArrayList<>();*/
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     private void gameLoop() {
@@ -205,6 +182,12 @@ class Game {
                 if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
                     state = GAME;
                     System.err.println("Pause is unset.");
+
+                    try {
+                        Thread.sleep(PAUSE_DELAY_MILLIS);
+                    } catch (Exception e) {
+                        System.err.println();
+                    }
                 }
                 break;
             }
@@ -217,15 +200,25 @@ class Game {
                     player.move(0, -0.5f);
                 }*/
 
-                /*
-                if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
+                if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
                     player.move(1, 0);
-                } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
+                } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
                     player.move(-1, 0);
                 }
-                */
 
                 if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
+
+                  // todo
+                  /*<<<<<<< bewrrrie
+                    try {
+                        Thread.sleep(PAUSE_DELAY_MILLIS);
+                    } catch (Exception e) {
+                        System.err.println();
+                    }
+
+                    state = State.PAUSE;
+                    System.err.println("Pause is set.");
+                    =======*/
                     frame.setFrameState(FrameState.TO_START);
                     System.err.println("WELCOME TO START!");
                 }
@@ -236,10 +229,13 @@ class Game {
     }
 
     /**
-     * Move all NPC according to their inner algorithm.
+     * Move all NPC according to their inner route.
+     * Change players coordinates while jumping.
      */
-    private void processAI() {
-
+    private void processCharactersMovement() {
+        for (NPC npc : NPCs) {
+            NpcRouteProcessor.process(npc);
+        }
     }
 
 
@@ -249,17 +245,6 @@ class Game {
     private void drawMainMenu() {
         //
     }
-
-    /**
-     * Draw every game object im memory.
-     */
-    /*private void drawScene() {
-        for (Character npc : NPCs) {
-            npc.draw();
-        }
-
-        player.draw();
-    }*/
 
     /**
      * Draw pause sign.

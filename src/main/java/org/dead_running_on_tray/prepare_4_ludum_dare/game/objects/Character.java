@@ -7,6 +7,7 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObj
  */
 public abstract class Character extends GameMovingObject {
     private int health = MAX_HEALTH;
+    private boolean isAlive = true;
     private int damage;
 
     public Character(int x, int y, int id, int scale, String spritePath) {
@@ -31,5 +32,12 @@ public abstract class Character extends GameMovingObject {
 
     public void decHealth(int damage) {
         health -= damage;
+    }
+
+    private void changeHealth(int dh) {
+        if (isAlive) {
+            health += dh;
+            isAlive = health > 0;
+        }
     }
 }

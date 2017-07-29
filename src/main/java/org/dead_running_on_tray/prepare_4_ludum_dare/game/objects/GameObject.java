@@ -1,5 +1,6 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.texture.Texture;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.SCREEN_HEIGHT;
@@ -7,9 +8,10 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.S
 import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GameObject {
-    protected int id;
-    protected float x, y;
-    protected Texture sprite;
+    private int id;
+    protected Point coordinates;
+    private Texture sprite;
+    private boolean inversedX = false;
 
     /**
      * For inner using.
@@ -17,8 +19,7 @@ public abstract class GameObject {
     protected float unit_width, unit_height, normX, normY;
 
     public GameObject(int x, int y, int id, int scale, String spritePath) {
-        this.x = x;
-        this.y = y;
+        coordinates = new Point(x, y);
         this.id = id;
 
         try {
@@ -30,18 +31,24 @@ public abstract class GameObject {
 
         unit_width = scale * getWidth() / SCREEN_WIDTH;
         unit_height = scale * getHeight() / SCREEN_HEIGHT;
+        normX = (float) x / SCREEN_WIDTH;
+        normY = (float) y / SCREEN_HEIGHT;
     }
 
     public int getId() {
         return id;
     }
 
+    public Point getCoordinates() {
+        return coordinates;
+    }
+
     public int getX() {
-        return (int) x;
+        return (int) coordinates.getX();
     }
 
     public int getY() {
-        return (int) y;
+        return (int) coordinates.getY();
     }
 
     public float getWidth() {
@@ -55,18 +62,35 @@ public abstract class GameObject {
     public Texture getSprite() {
         return sprite;
     }
+  
+// todo move "move" to GameMovingObject
+// |
+// |
+// V
+/* bewrrrie
+    public void move(float dx, float dy) {
+        if (inversedX && dx > 0 || dx < 0 && !inversedX) {
+            inversedX = !inversedX;
+        }
 
+        coordinates.move(dx, dy);
+        normX = coordinates.getX() / SCREEN_WIDTH;
+        normY = coordinates.getY() / SCREEN_HEIGHT;
+    }
+
+=======
+ master*/
     public void draw() {
         sprite.bind();
 
         glBegin(GL_POLYGON);
-        glTexCoord2f(0.0F, 1.0F);
+        glTexCoord2f(inversedX ? 1f : 0f, 1f);
         glVertex2f(normX, normY);
-        glTexCoord2f(1.0F, 1.0F);
+        glTexCoord2f(inversedX ? 0f : 1f, 1f);
         glVertex2f(normX + unit_width, normY);
-        glTexCoord2f(1.0F, 0.0F);
+        glTexCoord2f(inversedX ? 0f : 1f, 0f);
         glVertex2f(normX + unit_width, normY + unit_height);
-        glTexCoord2f(0.0F, 0.0F);
+        glTexCoord2f(inversedX ? 1f : 0f, 0f);
         glVertex2f(normX, normY + unit_height);
         glEnd();
     }
