@@ -6,7 +6,6 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObj
  * Game character.
  */
 public abstract class Character extends GameObject {
-
     private int health = MAX_HEALTH;
 
     Character(int x, int y, int id, String spritePath) {
