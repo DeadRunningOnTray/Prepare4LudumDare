@@ -29,15 +29,15 @@ class Game {
 
 
     private static long win;
-    private static State state = START_FRAME/*GAME*/;// Default state.
+    private static State state = START_FRAME;// Default state.
 
-    private static ILocation.Option currentLocation = ILocation.Option.START;
+    /*private static ILocation.Option currentLocation = ILocation.Option.START;
     private static HashMap<ILocation.Option, ILocation> locationsMap;
 
     private static Player player;
     private static ArrayList<Character> NPCs;
 
-    private static Texture pauseSign;
+    private static Texture pauseSign;*/
 
 
 
@@ -96,86 +96,78 @@ class Game {
 
         FrameState frameState = frame.getFrameState();
 
-        switch (state) {
-            case START_FRAME: {
-                switch (frameState) {
-                    case TO_GAME: {
-                        frame = new GameFrame(BACKGROUND_PACKAGE, BACKGROUND_NAME, PLAYER_PACKAGE, PLAYER_NAME, ENEMIES_PACKAGE, ENEMY_NAME);
-                        state = GAME;
-                        break;
+        if (frameState != FrameState.LIVE) {
+            switch (state) {
+                case START_FRAME: {
+                    switch (frameState) {
+                        case TO_GAME: {
+                            glClear(GL_COLOR_BUFFER_BIT);
+                            frame = new GameFrame(BACKGROUND_PACKAGE, BACKGROUND_NAME, PLAYER_PACKAGE, PLAYER_NAME, ENEMIES_PACKAGE, ENEMY_NAME);
+                            state = GAME;
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
                     }
-                    default: {
-                        break;
-                    }
+                    break;
                 }
-                break;
-            }
-            case GAME: {
-                switch (frameState) {
-                    case TO_LOOSE: {
-                        frame = new LooseFrame();
-                        state = LOOSE_FRAME;
-                        break;
+                case GAME: {
+                    switch (frameState) {
+                        case TO_START: {
+                            frame = new StartFrame();
+                            state = START_FRAME;
+                            break;
+                        }
+                        case TO_LOOSE: {
+                            frame = new LooseFrame();
+                            state = LOOSE_FRAME;
+                            break;
+                        }
+                        case TO_WIN: {
+                            frame = new WinFrame();
+                            state = WIN_FRAME;
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
                     }
-                    case TO_WIN: {
-                        frame = new WinFrame();
-                        state = WIN_FRAME;
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
+                    break;
                 }
-                break;
-            }
-            case LOOSE_FRAME: {
-                switch (frameState) {
-                    case TO_START: {
-                        frame = new StartFrame();
-                        state = START_FRAME;
-                        break;
+                case LOOSE_FRAME: {
+                    switch (frameState) {
+                        case TO_START: {
+                            frame = new StartFrame();
+                            state = START_FRAME;
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
                     }
-                    default: {
-                        break;
-                    }
+                    break;
                 }
-                break;
-            }
-            case WIN_FRAME: {
-                switch (frameState) {
-                    case TO_START: {
-                        frame = new StartFrame();
-                        state = START_FRAME;
-                        break;
+                case WIN_FRAME: {
+                    switch (frameState) {
+                        case TO_START: {
+                            frame = new StartFrame();
+                            state = START_FRAME;
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
                     }
-                    default: {
-                        break;
-                    }
+                    break;
                 }
-                break;
-            }
-            default: {
-                break;
+                default: {
+                    break;
+                }
             }
         }
 
-        /*switch (state) {
-            case MAIN_MENU: {
-                drawMainMenu();
-                break;
-            }
-
-            case PAUSE: {
-                drawScene();
-                drawPauseSign();
-                break;
-            }
-
-            case GAME: {
-                processAI();
-                drawScene();
-            }
-        }*/
+        frame.draw();
 
         glfwSwapBuffers(win);
     }
@@ -234,8 +226,8 @@ class Game {
                 */
 
                 if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
-                    state = State.PAUSE;
-                    System.err.println("Pause is set.");
+                    frame.setFrameState(FrameState.TO_START);
+                    System.err.println("WELCOME TO START!");
                 }
 
                 break;
@@ -261,13 +253,13 @@ class Game {
     /**
      * Draw every game object im memory.
      */
-    private void drawScene() {
+    /*private void drawScene() {
         for (Character npc : NPCs) {
             npc.draw();
         }
 
         player.draw();
-    }
+    }*/
 
     /**
      * Draw pause sign.

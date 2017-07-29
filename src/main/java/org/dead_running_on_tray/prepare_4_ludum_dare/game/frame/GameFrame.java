@@ -44,21 +44,21 @@ public class GameFrame extends Frame {
         System.out.println("player path = " + PLAYER_PATH);
         System.out.println("enemy path = " + ENEMY_PART_PATH);
 
-        location = new Location(/*locationPackage.concat(locationName.concat(EXTENSION))*/PLAYER_PATH) {
-        }/*new StartLocation()*/;
+        location = new Location(LOCATION_PACKAGE + LOCATION_NAME + EXTENSION);
         player = new Player(
                 START_PLAYER_POS_X,
                 START_PLAYER_POS_Y,
                 1,
                 PLAYER_SCALE,
-                /*playerPackage + playerName + EXTENSION*/PLAYER_PATH);
+                PLAYER_PATH);
         npcs = new ArrayList<>();
-        for (int i = 0; i < npcNames.length; i++) {
+        /*for (int i = 0; i < npcNames.length; i++) {
             //String s = npcPackage.concat(npcNames[i].concat(EXTENSION));
-            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, /*npcPackage.concat(npcNames[i].concat(EXTENSION)))*/PLAYER_PATH));
-        }
+            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE));
+        }*/
 
         // draw it!
+        //location.draw();
         this.draw();
         startTime = System.currentTimeMillis();
 
@@ -68,11 +68,12 @@ public class GameFrame extends Frame {
     @Override
     public void draw() {
         location.draw();
-        player.draw();
-        System.out.println("DRAW PLAYER!!!");
+        //player.draw();
+        //System.out.println("DRAW PLAYER!!!");
         for (NPC npc : npcs) {
             npc.draw();
         }
+        player.draw();
     }
 
     private static int countOfTime(long start, long end) {
@@ -97,6 +98,7 @@ public class GameFrame extends Frame {
         } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
             player.move(0, -0.5f);
         }
+        this.draw();
     }
 
 }
