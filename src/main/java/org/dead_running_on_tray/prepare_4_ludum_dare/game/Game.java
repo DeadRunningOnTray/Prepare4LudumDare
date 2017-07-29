@@ -40,8 +40,8 @@ class Game {
             gameLoop();
         }
 
-        //glfwTerminate();
-        //System.exit(0);
+        glfwTerminate();
+        System.exit(0);
     }
 
 
@@ -64,7 +64,7 @@ class Game {
 
         // TODO this block.
         // Initialize pause sign sprite.
-        //pauseSign = new Texture("src/main/resources/img/pause/pause_sign.png");
+        // pauseSign = new Texture("src/main/resources/img/pause/pause_sign.png");
 
         // Initializing objects.
         player = new Player(
@@ -96,7 +96,7 @@ class Game {
             }
 
             case GAME: {
-                moveCharacters();
+                processAI();
                 drawScene();
             }
         }
@@ -123,6 +123,20 @@ class Game {
             }
 
             case GAME: {
+                if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
+                    player.move(0, 0.5f);
+                } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
+                    player.move(0, -0.5f);
+                }
+
+                /*
+                if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
+                    player.move(1, 0);
+                } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
+                    player.move(-1, 0);
+                }
+                */
+
                 if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
                     state = State.PAUSE;
                     System.err.println("Pause is set.");
@@ -132,9 +146,9 @@ class Game {
     }
 
     /**
-     * Move all
+     * Move all NPC according to their inner algorithm.
      */
-    private void moveCharacters() {
+    private void processAI() {
 
     }
 
