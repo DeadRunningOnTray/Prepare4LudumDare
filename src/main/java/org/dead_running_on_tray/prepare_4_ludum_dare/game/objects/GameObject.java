@@ -36,11 +36,11 @@ public abstract class GameObject {
         return (int) y;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return sprite.getWidth();
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return sprite.getHeight();
     }
 
@@ -56,18 +56,25 @@ public abstract class GameObject {
     public void draw() {
         sprite.bind();
 
-        float unit_width = 0.7f;
-        float unit_height = 0.7f;
+        float unit_width = 2 * getWidth() / SCREEN_WIDTH;
+        float unit_height = 2 * getHeight() / SCREEN_HEIGHT;
 
-        glBegin(GL_QUADS); {
-            glTexCoord2f(0, 0);
-            glVertex2f(-unit_width, unit_height);
-            glTexCoord2f(1, 0);
-            glVertex2f(unit_width, unit_height);
-            glTexCoord2f(1, 1);
-            glVertex2f(unit_width, -unit_height);
-            glTexCoord2f(0, 1);
-            glVertex2f(-unit_width, -unit_height);
-        } glEnd();
+        System.out.println(unit_width + ", " + unit_height);
+
+        float tx = 0.0F;
+        float ty = 0.0F;
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(tx, ty + 0.5F);
+        glVertex2f(0.0F, 0.0F);
+        glTexCoord2f(tx + 0.5F, ty + 0.5F);
+        glVertex2f(unit_width, 0.0F);
+        glTexCoord2f(tx + 0.5F, ty);
+        glVertex2f(unit_width, unit_height);
+        glTexCoord2f(tx, ty);
+        glVertex2f(0.0F, unit_height);
+        glEnd();
+
+        //sprite.release();
     }
 }
