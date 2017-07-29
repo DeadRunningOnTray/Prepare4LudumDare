@@ -7,7 +7,6 @@ import static org.lwjgl.opengl.GL11.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.ILocation;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.texture.Texture;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLContext;
 
@@ -29,9 +28,6 @@ class Game {
 
     private static Player player;
     private static ArrayList<NPC> NPCs;
-
-    private static Texture pauseSign;
-
 
     Game() {
         init();
@@ -60,6 +56,8 @@ class Game {
         GLContext.createFromCurrent();
         GL.createCapabilities(true);
         glEnable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
         // TODO this block.
@@ -82,6 +80,8 @@ class Game {
             "src/main/resources/img/player/frame_1_sqr.png",
             "src/main/resources/routes/test_route"
         ));
+
+        NPCs.get(0).becomeAggressiveTo(player);
     }
 
 
@@ -103,7 +103,7 @@ class Game {
             }
 
             case GAME: {
-                processAI();
+                processCharactersMovement();
                 drawScene();
             }
         }
@@ -152,8 +152,9 @@ class Game {
 
     /**
      * Move all NPC according to their inner route.
+     * Change players coordinates while jumping.
      */
-    private void processAI() {
+    private void processCharactersMovement() {
         for (NPC npc : NPCs) {
             NpcRouteProcessor.process(npc);
         }
@@ -171,6 +172,8 @@ class Game {
      * Draw every game object im memory.
      */
     private void drawScene() {
+
+
         for (Character npc : NPCs) {
             npc.draw();
         }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * Non playable character.
  */
 public class NPC extends Character {
+    private boolean aggressive;
     private ArrayList<Point> route;
     private int currentDestination = 0;
 
@@ -37,6 +38,7 @@ public class NPC extends Character {
      */
     public NPC(int x, int y, int id, String spritePath, String routeFile) {
         super(x, y, id, spritePath);
+        aggressive = false;
         route = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(routeFile)))) {
@@ -62,6 +64,12 @@ public class NPC extends Character {
         if (currentDestination + 1 > route.size()) {
             currentDestination = 0;
         }
+    }
+
+    public void becomeAggressiveTo(Character c) {
+        aggressive = true;
+        route.clear();
+        route.add(c.getCoordinates());
     }
 
     public Point getCurrentDestination() {

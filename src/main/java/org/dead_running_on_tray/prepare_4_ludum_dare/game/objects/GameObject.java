@@ -1,5 +1,6 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.texture.Texture;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.SCREEN_HEIGHT;
@@ -8,7 +9,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GameObject {
     private int id;
-    protected float x, y;
+    protected Point coordinates;
     private Texture sprite;
 
     /**
@@ -16,9 +17,8 @@ public abstract class GameObject {
      */
     private float unit_width, unit_height, normX, normY;
 
-    GameObject(final int x, final int y, final int id, final String spritePath) {
-        this.x = x;
-        this.y = y;
+    GameObject(int x, int y, int id, String spritePath) {
+        coordinates = new Point(x, y);
         this.id = id;
 
         try {
@@ -30,18 +30,24 @@ public abstract class GameObject {
 
         unit_width = 4 * getWidth() / SCREEN_WIDTH;
         unit_height = 4 * getHeight() / SCREEN_HEIGHT;
+        normX = (float) x / SCREEN_WIDTH;
+        normY = (float) y / SCREEN_HEIGHT;
     }
 
     public int getId() {
         return id;
     }
 
+    public Point getCoordinates() {
+        return coordinates;
+    }
+
     public int getX() {
-        return (int) x;
+        return (int) coordinates.getX();
     }
 
     public int getY() {
-        return (int) y;
+        return (int) coordinates.getY();
     }
 
     public float getWidth() {
@@ -57,10 +63,9 @@ public abstract class GameObject {
     }
 
     public void move(float dx, float dy) {
-        x += dx;
-        y += dy;
-        normX = x / SCREEN_WIDTH;
-        normY = y / SCREEN_HEIGHT;
+        coordinates.move(dx, dy);
+        normX = coordinates.getX() / SCREEN_WIDTH;
+        normY = coordinates.getY() / SCREEN_HEIGHT;
     }
 
     public void draw() {
