@@ -6,5 +6,8 @@ package org.dead_running_on_tray.prepare_4_ludum_dare.game;
 public enum State {
     MAIN_MENU,
     GAME,
-    PAUSE
+    PAUSE,
+    START_FRAME,
+    WIN_FRAME,
+    LOOSE_FRAME,
 }
