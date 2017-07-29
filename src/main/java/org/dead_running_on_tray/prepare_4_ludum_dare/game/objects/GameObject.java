@@ -7,16 +7,16 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.S
 import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GameObject {
-    private int id;
-    private float x, y;
-    private Texture sprite;
+    protected int id;
+    protected float x, y;
+    protected Texture sprite;
 
     /**
      * For inner using.
      */
-    private float unit_width, unit_height, normX, normY;
+    protected float unit_width, unit_height, normX, normY;
 
-    GameObject(int x, int y, int id, int scale, String spritePath) {
+    public GameObject(int x, int y, int id, int scale, String spritePath) {
         this.x = x;
         this.y = y;
         this.id = id;
@@ -54,15 +54,6 @@ public abstract class GameObject {
 
     public Texture getSprite() {
         return sprite;
-    }
-
-    public void move(float dx, float dy) {
-        x += dx;
-        y += dy;
-        normX = x / SCREEN_WIDTH;
-        normY = y / SCREEN_HEIGHT;
-
-        System.out.println(x + " " + y);
     }
 
     public void draw() {
