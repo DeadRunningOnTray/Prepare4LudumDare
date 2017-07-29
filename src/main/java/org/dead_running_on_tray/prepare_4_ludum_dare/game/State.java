@@ -1,8 +1,10 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game;
 
 /**
- * Game state.
+ * Game state enumerator.
  */
 public enum State {
-    MAIN_MENU, GAME
+    MAIN_MENU,
+    GAME,
+    PAUSE
 }

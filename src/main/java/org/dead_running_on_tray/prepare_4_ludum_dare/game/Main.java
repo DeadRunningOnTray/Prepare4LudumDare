@@ -5,7 +5,7 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.shared_loader.SharedLi
 /**
  * Entry point.
  */
-public class Main {
+class Main {
     public static void main(String[] args) {
         SharedLibraryLoader.load(false);
         new Game();
