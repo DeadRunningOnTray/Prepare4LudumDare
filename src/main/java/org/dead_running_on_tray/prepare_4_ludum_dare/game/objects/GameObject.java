@@ -8,7 +8,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GameObject {
     private int id;
-    private float x, y;
+    protected float x, y;
     private Texture sprite;
 
     /**
@@ -61,8 +61,6 @@ public abstract class GameObject {
         y += dy;
         normX = x / SCREEN_WIDTH;
         normY = y / SCREEN_HEIGHT;
-
-        System.out.println(x + " " + y);
     }
 
     public void draw() {

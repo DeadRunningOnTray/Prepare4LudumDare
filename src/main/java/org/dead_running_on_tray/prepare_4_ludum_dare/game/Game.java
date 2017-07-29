@@ -5,8 +5,9 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.ILocation;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Player;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.texture.Texture;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLContext;
@@ -28,7 +29,7 @@ class Game {
     private static HashMap<ILocation.Option, ILocation> locationsMap;
 
     private static Player player;
-    private static ArrayList<Character> NPCs;
+    private static ArrayList<NPC> NPCs;
 
     private static Texture pauseSign;
 
@@ -75,6 +76,12 @@ class Game {
         );
 
         NPCs = new ArrayList<>();
+        NPC n = new NPC(0, 0, 2, "src/main/resources/img/player/frame_1_sqr.png");
+        n.addPointToRoute(new Point(SCREEN_WIDTH / 2, 0));
+        n.addPointToRoute(new Point(0, -SCREEN_HEIGHT / 2));
+        n.addPointToRoute(new Point(-SCREEN_WIDTH / 2, 0));
+        n.addPointToRoute(new Point(0, SCREEN_HEIGHT / 2));
+        NPCs.add(n);
     }
 
 
@@ -129,13 +136,11 @@ class Game {
                     player.move(0, -0.5f);
                 }
 
-                /*
-                if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
+                if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
                     player.move(1, 0);
-                } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
+                } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
                     player.move(-1, 0);
                 }
-                */
 
                 if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
                     state = State.PAUSE;
@@ -146,10 +151,12 @@ class Game {
     }
 
     /**
-     * Move all NPC according to their inner algorithm.
+     * Move all NPC according to their inner route.
      */
     private void processAI() {
-
+        for (NPC npc : NPCs) {
+            npc.moveThroughRoute();
+        }
     }
 
 
