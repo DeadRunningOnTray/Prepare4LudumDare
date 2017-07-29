@@ -4,6 +4,7 @@ public interface GameConstants {
     String TITLE = "P4LD";
 
     int JUMP_DURATION_MILLIS = 1000;
+    int PAUSE_DELAY_MILLIS = 250;
 
     int SCREEN_WIDTH = 800;
     int SCREEN_HEIGHT = 600;

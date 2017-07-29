@@ -19,7 +19,6 @@ import java.util.HashMap;
  */
 class Game {
 
-
     private static long win;
     private static State state = State.GAME;// Default state.
 
@@ -28,6 +27,8 @@ class Game {
 
     private static Player player;
     private static ArrayList<NPC> NPCs;
+
+    StaticObject background;
 
     Game() {
         init();
@@ -69,19 +70,19 @@ class Game {
             START_PLAYER_POS_X,
             START_PLAYER_POS_Y,
             1,
-            "src/main/resources/img/player/frame_1_sqr.png"
+            "src/main/resources/img/player/frame_1_sqr_centered.png"
         );
 
         NPCs = new ArrayList<>();
-        NPCs.add(new NPC(
+        NPCs.add(new Enemy(
             0,
             0,
             2,
-            "src/main/resources/img/player/frame_1_sqr.png",
+            "src/main/resources/img/player/test1.png",
             "src/main/resources/routes/test_route"
         ));
 
-        NPCs.get(0).becomeAggressiveTo(player);
+        background = new StaticObject(0, 0, 5, "src/main/resources/img/room/test.png");
     }
 
 
@@ -125,6 +126,12 @@ class Game {
                 if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
                     state = State.GAME;
                     System.err.println("Pause is unset.");
+
+                    try {
+                        Thread.sleep(PAUSE_DELAY_MILLIS);
+                    } catch (Exception e) {
+                        System.err.println();
+                    }
                 }
                 break;
             }
@@ -143,6 +150,12 @@ class Game {
                 }
 
                 if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
+                    try {
+                        Thread.sleep(PAUSE_DELAY_MILLIS);
+                    } catch (Exception e) {
+                        System.err.println();
+                    }
+
                     state = State.PAUSE;
                     System.err.println("Pause is set.");
                 }
@@ -172,7 +185,7 @@ class Game {
      * Draw every game object im memory.
      */
     private void drawScene() {
-
+        background.draw();
 
         for (Character npc : NPCs) {
             npc.draw();

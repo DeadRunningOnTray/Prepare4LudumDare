@@ -11,6 +11,7 @@ public abstract class GameObject {
     private int id;
     protected Point coordinates;
     private Texture sprite;
+    private boolean inversedX = false;
 
     /**
      * For inner using.
@@ -63,6 +64,10 @@ public abstract class GameObject {
     }
 
     public void move(float dx, float dy) {
+        if (inversedX && dx > 0 || dx < 0 && !inversedX) {
+            inversedX = !inversedX;
+        }
+
         coordinates.move(dx, dy);
         normX = coordinates.getX() / SCREEN_WIDTH;
         normY = coordinates.getY() / SCREEN_HEIGHT;
@@ -72,13 +77,13 @@ public abstract class GameObject {
         sprite.bind();
 
         glBegin(GL_POLYGON);
-        glTexCoord2f(0.0F, 1.0F);
+        glTexCoord2f(inversedX ? 1f : 0f, 1f);
         glVertex2f(normX, normY);
-        glTexCoord2f(1.0F, 1.0F);
+        glTexCoord2f(inversedX ? 0f : 1f, 1f);
         glVertex2f(normX + unit_width, normY);
-        glTexCoord2f(1.0F, 0.0F);
+        glTexCoord2f(inversedX ? 0f : 1f, 0f);
         glVertex2f(normX + unit_width, normY + unit_height);
-        glTexCoord2f(0.0F, 0.0F);
+        glTexCoord2f(inversedX ? 1f : 0f, 0f);
         glVertex2f(normX, normY + unit_height);
         glEnd();
     }
