@@ -35,6 +35,23 @@ public abstract class GameObject {
         normY = (float) y / SCREEN_HEIGHT;
     }
 
+    public GameObject(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        coordinates = new Point(x, y);
+        this.id = id;
+
+        try {
+            sprite = new Texture(spritePath);
+        } catch (Exception e) {
+            System.err.println("Error while reading sprite for game object!");
+            sprite = null;
+        }
+
+        unit_width = scaleWidth * getWidth() / SCREEN_WIDTH;
+        unit_height = scale * getHeight() / SCREEN_HEIGHT;
+        normX = (float) x / SCREEN_WIDTH;
+        normY = (float) y / SCREEN_HEIGHT;
+    }
+
     public int getId() {
         return id;
     }
@@ -59,6 +76,22 @@ public abstract class GameObject {
         return sprite.getHeight();
     }
 
+    public float getUnit_width() {
+        return unit_width;
+    }
+
+    public void setUnit_width(float unit_width) {
+        this.unit_width = unit_width;
+    }
+
+    public float getUnit_height() {
+        return unit_height;
+    }
+
+    public void setUnit_height(float unit_height) {
+        this.unit_height = unit_height;
+    }
+
     public Texture getSprite() {
         return sprite;
     }
@@ -67,6 +100,7 @@ public abstract class GameObject {
         sprite.bind();
 
         glBegin(GL_POLYGON);
+
         glTexCoord2f(inversedX ? 1f : 0f, 1f);
         glVertex2f(normX, normY);
         glTexCoord2f(inversedX ? 0f : 1f, 1f);

@@ -13,6 +13,7 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.frame.frame_state.Fram
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.ILocation;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLContext;
 
@@ -40,6 +41,10 @@ class Game {
             gameLoop();
         }
 
+        forEscape();
+    }
+
+    private void forEscape() {
         glfwTerminate();
         System.exit(0);
     }
@@ -71,7 +76,7 @@ class Game {
 
         FrameState frameState = frame.getFrameState();
 
-        if (frameState != FrameState.LIVE) {
+        //if (frameState != FrameState.LIVE) {
             switch (state) {
                 case START_FRAME: {
                     switch (frameState) {
@@ -140,7 +145,7 @@ class Game {
                     break;
                 }
             }
-        }
+        //}
 
         frame.draw();
 
@@ -158,6 +163,9 @@ class Game {
                 if (glfwGetKey(win, GLFW_KEY_ENTER) == GL_TRUE) {
                     frame.setFrameState(FrameState.TO_GAME);
                     System.out.println("FROM START TO GAME!!!!");
+                }
+                if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
+                    forEscape();
                 }
                 break;
             }
@@ -178,30 +186,23 @@ class Game {
                 if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
                     state = GAME;
                     System.err.println("Pause is unset.");
-
-                    try {
-                        Thread.sleep(PAUSE_DELAY_MILLIS);
-                    } catch (Exception e) {
-                        System.err.println();
-                    }
                 }
                 break;
             }
 
             case GAME: {
+                if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
+                    frame.setFrameState(FrameState.TO_START);
+                    System.err.println("WELCOME TO START!");
+                }
 
                 ((GameFrame) frame).movePlayer(win);
                 ((GameFrame) frame).moveNPCs(win);
 
                 try {
-                    Thread.sleep(PAUSE_FOR_MOVING);
+                    Thread.sleep(PAUSE_FOR_MOVING / 10);
                 } catch (Exception e) {
                     System.err.println(e);
-                }
-
-                if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
-                    frame.setFrameState(FrameState.TO_START);
-                    System.err.println("WELCOME TO START!");
                 }
 
                 break;

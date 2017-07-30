@@ -9,12 +9,19 @@ public interface GameConstants {
     int PAUSE_FOR_MOVING = 60;
 
     int SCREEN_WIDTH = 800;
-    int SCREEN_HEIGHT = 600;
+    int SCREEN_HEIGHT = 500;
   
     ///int START_PLAYER_POS_X = -3 * SCREEN_WIDTH / 4;
    // int START_PLAYER_POS_Y = - SCREEN_WIDTH / 4;
-  
-    int START_PLAYER_POS_X = 0;
+
+    int PLAYER_PRIORITY = 2;
+
+    int BACKGROUND_SCALE = 2;
+
+    int BACKGROUND_X = - SCREEN_WIDTH;
+    int BACKGROUND_Y = - 8 * SCREEN_HEIGHT / 4;
+
+    int START_PLAYER_POS_X = - SCREEN_WIDTH / 2;//0;
     int START_PLAYER_POS_Y = 0;
 
     int MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE = -SCREEN_HEIGHT / 2;
@@ -26,8 +33,8 @@ public interface GameConstants {
     int PLAYER_DAMAGE = 42;
     int NPC_DAMAGE = 45;
 
-    float VISIBLE_AREA_RADIUS = 42.42f;
-    float INVISIBLE_AREA_RADIUS = 10.42f;
+    float VISIBLE_AREA_RADIUS = 300.0f;
+    float INVISIBLE_AREA_RADIUS = 0.42f;
 
     int PLAYER_HEALTH = 2000;
     int NPC_HEALTH = 1000;
@@ -45,7 +52,7 @@ public interface GameConstants {
     String ENEMY_PART_PATH = IMG_PACKAGE + ENEMIES_PACKAGE + ENEMY_NAME + EXTENSION;
 
     String PLAYER_PACKAGE = "player/";
-    String PLAYER_NAME = "frame_1_sqr";
+    String PLAYER_NAME = "frame0";
     String PLAYER_PATH = IMG_PACKAGE + PLAYER_PACKAGE + PLAYER_NAME + EXTENSION;
 
     String LOCATION_PACKAGE = "location/";

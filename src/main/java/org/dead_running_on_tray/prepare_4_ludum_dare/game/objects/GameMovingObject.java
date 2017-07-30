@@ -13,6 +13,10 @@ public abstract class GameMovingObject extends GameObject {
         super(x, y, id, scale, spritePath);
     }
 
+    public GameMovingObject(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        super(x, y, id, scale, scaleWidth, spritePath);
+    }
+
     public void move(float dx, float dy) {
         if (inversedX && dx > 0 || dx < 0 && !inversedX) {
             inversedX = !inversedX;

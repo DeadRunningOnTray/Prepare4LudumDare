@@ -2,21 +2,20 @@ package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
 
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Route;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
 
 
 /**
  * Non playable character.
  */
 public class NPC extends Character {
-    protected ArrayList<Point> route = new ArrayList<>();
+    /*protected ArrayList<Point> route = new ArrayList<>();*/
+    protected Route route = new Route();
     private int currentDestination = 0;
 
     public NPC(int x, int y, int id, int scale, String spritePath) {
@@ -24,9 +23,13 @@ public class NPC extends Character {
         //route = new ArrayList<>();
     }
 
-    public NPC(int x, int y, int id, int scale, String spritePath, ArrayList<Point> route) {
+    public NPC(int x, int y, int id, int scale, String spritePath, Route route) {
         super(x, y, id, scale, spritePath);
         this.route = route;
+    }
+
+    public NPC(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        super(x, y, id, scale, scaleWidth, spritePath);
     }
 
     /**
@@ -48,7 +51,7 @@ public class NPC extends Character {
 
             while (line != null) {
                 String[] coordinates = line.split(",");
-                route.add(new Point(
+                route.add2Route(new Point(
                     Integer.parseInt(coordinates[0]),
                     Integer.parseInt(coordinates[1])
                 ));
@@ -56,23 +59,27 @@ public class NPC extends Character {
             }
         } catch (IOException e) {
             System.err.println("Error while reading characters route from file!");
-            route = new ArrayList<>();
         }
     }
 
-    void nextPoint() {
+    /*void nextPoint() {
         currentDestination++;
 
         if (currentDestination + 1 > route.size()) {
             currentDestination = 0;
         }
-    }
+    }*/
 
     public Point getCurrentDestination() {
-        return route.get(currentDestination);
+        return route.getCurrentDestination();
+        /*return route.get(currentDestination);*/
     }
 
     public void addPointToRoute(Point p) {
-        route.add(p);
+        route.add2Route(p);
+    }
+
+    public void removePointFromRoute(Point p) {
+        route.removePointFromRoute(p);
     }
 }
