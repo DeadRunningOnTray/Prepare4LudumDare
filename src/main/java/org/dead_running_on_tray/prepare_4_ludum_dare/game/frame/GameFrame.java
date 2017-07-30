@@ -69,8 +69,8 @@ public class GameFrame extends Frame {
             npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, NPC_SCALE_WIDTH, ENEMY_PART_PATH));
         }
         npcs.get(0).addPointToRoute(new Point(0f, 0f));
-        npcs.get(0).addPointToRoute(new Point(0.5f, 0.3f));
-        npcs.get(0).addPointToRoute(new Point(0.7f, 0.2f));
+        npcs.get(0).addPointToRoute(new Point(100.0f, 13f));
+        npcs.get(0).addPointToRoute(new Point(-100f, 112f));
 
         startTime = System.currentTimeMillis();
 
@@ -149,9 +149,9 @@ public class GameFrame extends Frame {
 
                 //lastPlayerVisiblePoint = new Point(xx, yy);
 
-                npc.addPointToRoute(player.getCoordinates());
+                //npc.addPointToRoute(player.getCoordinates());
             } else {
-                //npc.removePointFromRoute(player.getCoordinates());
+                //npc.removeInvisiblePoint(lastPlayerVisiblePoint);
             }
 
             NpcProcessor.process(npc);

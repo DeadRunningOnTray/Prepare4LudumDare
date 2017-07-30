@@ -18,7 +18,7 @@ public interface GameConstants {
     int BACKGROUND_SCALE = 2;
 
     int BACKGROUND_X = - SCREEN_WIDTH;
-    int BACKGROUND_Y = - 8 * SCREEN_HEIGHT / 4;
+    int BACKGROUND_Y = - 2 * SCREEN_HEIGHT;
 
     int START_PLAYER_POS_X = - SCREEN_WIDTH / 2;//0;
     int START_PLAYER_POS_Y = 0;
@@ -45,6 +45,23 @@ public interface GameConstants {
     String BACKGROUND_PACKAGE = "background/";
     String BACKGROUND_NAME = "start_location";
     String BACKGROUND_PATH = IMG_PACKAGE + BACKGROUND_PACKAGE + BACKGROUND_NAME + EXTENSION;
+
+    String FRAMES_PACKAGE = IMG_PACKAGE + "frames/";
+
+    String INSTRUCTION = "instruction1";
+    String START = "startscreen1";
+    String LOSE = "lose1";
+    String WIN = "win1";
+
+    String START_PATH = IMG_PACKAGE + BACKGROUND_PACKAGE + START + EXTENSION;
+    String INSTRUCTION_PATH = IMG_PACKAGE + BACKGROUND_PACKAGE + INSTRUCTION + EXTENSION;
+    String LOSE_PATH = IMG_PACKAGE + BACKGROUND_PACKAGE + LOSE + EXTENSION;
+    String WIN_PATH = IMG_PACKAGE + BACKGROUND_PACKAGE + WIN + EXTENSION;
+
+    int INSTRUCTION_SCALE = 1;
+    int START_SCALE = 1;
+    int LOSE_SCALE = 1;
+    int WIN_SCALE = 1;
 
     String ENEMIES_PACKAGE = "enemies/";
     String ENEMY_NAME = "enemy1";
