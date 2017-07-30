@@ -30,10 +30,12 @@ class Game {
     private static long win;
     private static State state = START_FRAME;// Default state.
 
-    private Frame frame = new StartFrame();
+    private Frame frame;// = new StartFrame();
 
     Game() {
         init();
+
+        frame = new StartFrame();
 
         while (glfwWindowShouldClose(win) != GL_TRUE) {
             gameLoop();
@@ -76,12 +78,27 @@ class Game {
 
         //if (frameState != FrameState.LIVE) {
             switch (state) {
-                case START_FRAME: {
+                case INSTRUCTION_FRAME: {
                     switch (frameState) {
                         case TO_GAME: {
                             glClear(GL_COLOR_BUFFER_BIT);
                             frame = new GameFrame(BACKGROUND_PACKAGE, BACKGROUND_NAME, PLAYER_PACKAGE, PLAYER_NAME, ENEMIES_PACKAGE, ENEMY_NAME);
                             state = GAME;
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case START_FRAME: {
+                    switch (frameState) {
+                        case TO_INSTRUCTION: {
+                            glClear(GL_COLOR_BUFFER_BIT);
+                            frame = new InstructionFrame();
+                            //frame = new GameFrame(BACKGROUND_PACKAGE, BACKGROUND_NAME, PLAYER_PACKAGE, PLAYER_NAME, ENEMIES_PACKAGE, ENEMY_NAME);
+                            state = INSTRUCTION_FRAME;
                             break;
                         }
                         default: {
@@ -158,6 +175,16 @@ class Game {
 
         switch (state) {
             case START_FRAME: {
+                if (glfwGetKey(win, GLFW_KEY_ENTER) == GL_TRUE) {
+                    frame.setFrameState(FrameState.TO_INSTRUCTION);
+                    System.out.println("FROM START TO GAME!!!!");
+                }
+                if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
+                    forEscape();
+                }
+                break;
+            }
+            case INSTRUCTION_FRAME: {
                 if (glfwGetKey(win, GLFW_KEY_ENTER) == GL_TRUE) {
                     frame.setFrameState(FrameState.TO_GAME);
                     System.out.println("FROM START TO GAME!!!!");

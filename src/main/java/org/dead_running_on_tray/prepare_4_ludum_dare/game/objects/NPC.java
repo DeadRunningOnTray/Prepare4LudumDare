@@ -51,7 +51,7 @@ public class NPC extends Character {
 
             while (line != null) {
                 String[] coordinates = line.split(",");
-                route.add2Route(new Point(
+                route.add2Path(new Point(
                     Integer.parseInt(coordinates[0]),
                     Integer.parseInt(coordinates[1])
                 ));
@@ -62,13 +62,16 @@ public class NPC extends Character {
         }
     }
 
-    /*void nextPoint() {
-        currentDestination++;
+    public void nextPoint() {
+        if (!route.haveAdditionalPoint()) {
+            route.nextIndex();
+        }
+        /*currentDestination++;
 
         if (currentDestination + 1 > route.size()) {
             currentDestination = 0;
-        }
-    }*/
+        }*/
+    }
 
     public Point getCurrentDestination() {
         return route.getCurrentDestination();
@@ -76,10 +79,20 @@ public class NPC extends Character {
     }
 
     public void addPointToRoute(Point p) {
+        route.add2Path(p);
+    }
+
+    public void addVisiblePoint(Point p) {
+        System.out.println("IN NPC FOR ADDING!!!");
         route.add2Route(p);
     }
 
     public void removePointFromRoute(Point p) {
         route.removePointFromRoute(p);
+    }
+
+    public void removeInvisiblePoint(Point p) {
+        System.out.println("IN NPC!");
+        route.removeAdditionalPoint(p);
     }
 }

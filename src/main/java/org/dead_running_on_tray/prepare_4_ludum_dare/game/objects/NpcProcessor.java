@@ -4,12 +4,26 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 
 public class NpcProcessor {
     public static void process(NPC npc) {
+
+        System.out.println();
+        System.out.println(npc.getCurrentDestination());
+        System.out.println(npc.route.getAdditional());
+        //System.out.println("DEST = " + npc.getCurrentDestination().getX());
+        //System.out.println("DEST1 = " + npc.route.getAdditional().getX());
+        System.out.println();
+
+        /*try {
+            Thread.sleep(30);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
         float dx = npc.getX() - npc.getCurrentDestination().getX();
         float dy = npc.getY() - npc.getCurrentDestination().getY();
 
         if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
-            npc.getCurrentDestination();
-            //npc.nextPoint();
+            //npc.getCurrentDestination();
+            npc.nextPoint();
         }
 
         if ((int) dx > 0) {
