@@ -16,8 +16,25 @@ public class Route {
     }
 
     public void add2Route(Point p) {
-        additionalPoints.add(p);
-        routePriority.add(p);
+        System.out.println("IN ADD2ROUTE!");
+        //System.out.println();
+
+        /*try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
+        if (!additionalPoints.contains(p)) {
+            System.out.println("ADD IT!");
+            additionalPoints.add(p);
+            routePriority.add(p);
+        }
+        else {
+            System.out.println("DONT ADD IT!!!");
+        }
+
+        System.out.println();
     }
 
     public void removePointFromRoute(Point p) {
@@ -25,10 +42,29 @@ public class Route {
     }
 
     public void removeAdditionalPoint(Point p) {
+        System.out.println("IN ROUTE!!");
+
+        System.out.println();
+        System.out.println("1 = " + additionalPoints.size());
+        System.out.println("2 = " + additionalPoints.contains(p));
+        System.out.println("3 = " + routePriority.peek());
+        System.out.println();
+
+        /*try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
         if (additionalPoints.size() > 0 && additionalPoints.contains(p)) {
+            System.out.println("IN INNER OF IF!!!!");
             additionalPoints.remove(p);
             routePriority.remove(p);
         }
+    }
+
+    public Point getAdditional() {
+        return routePriority.peek();
     }
 
     public void nextIndex() {
@@ -37,10 +73,24 @@ public class Route {
         index = ((size + (index + 1) % size) % size);
     }
 
+    public boolean haveAdditionalPoint() {
+        return additionalPoints.size() > 0;
+    }
+
     public Point getCurrentDestination() {
         Point p = null;
+        System.out.println("PEEK = " + routePriority.peek());
+        System.out.println();
+
+        /*try {
+            Thread.sleep(40);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
         if (additionalPoints.size() > 0 && routePriority.peek().getPriority() > 0) {
-            return routePriority.peek();
+            System.out.println(routePriority.peek());
+            p = routePriority.peek();
         } else {
             if (path.size() > 0) {
                 p = path.get(index);

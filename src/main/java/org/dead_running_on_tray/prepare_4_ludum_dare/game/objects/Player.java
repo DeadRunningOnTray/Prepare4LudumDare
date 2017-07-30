@@ -38,6 +38,7 @@ public class Player extends Character{
     public Point getCoordinates() {
         Point p = super.getCoordinates();
         p.setPriority(PLAYER_PRIORITY);
+        p.setPlayer(true);
         return p;
     }
 

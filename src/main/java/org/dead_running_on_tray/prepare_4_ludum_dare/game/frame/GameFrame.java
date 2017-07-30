@@ -47,7 +47,7 @@ public class GameFrame extends Frame {
     }
 
     private int getNPCBornY() {
-        return -random.nextInt(-MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE) + (MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE - MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE);
+        return -random.nextInt(-MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE) - (MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE - MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE);
     }
 
     public GameFrame(String locationPackage, String locationName, String playerPackage, String playerName, String npcPackage, String ... npcNames) {
@@ -151,9 +151,11 @@ public class GameFrame extends Frame {
 
                 lastPlayerVisiblePoint = new Point(xx, yy);
 
-                npc.addPointToRoute(player.getCoordinates());
+                System.out.println("VISIBLE!");
+                //npc.addVisiblePoint(lastPlayerVisiblePoint);
             } else {
-                npc.removeInvisiblePoint(lastPlayerVisiblePoint);
+                System.out.println("INVISIBLE!!!");
+                //npc.removeInvisiblePoint(lastPlayerVisiblePoint);
             }
 
             NpcProcessor.process(npc);

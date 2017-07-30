@@ -2,7 +2,8 @@ package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route;
 
 public class Point {
     private float x, y;
-    private int priority = 0;
+    private int priority = 42;
+    private boolean isPlayer = true;
 
     public Point(float x, float y) {
         this.x = x;
@@ -30,9 +31,17 @@ public class Point {
         this.priority = priority;
     }
 
+    public boolean isPlayer() {
+        return isPlayer;
+    }
+
+    public void setPlayer(boolean player) {
+        isPlayer = player;
+    }
+
     @Override
     public String toString() {
-        return "(" + x + ", " + ")";
+        return "(" + x + ", " + y + ", priority = " + priority + ", player = " + isPlayer + ")";
     }
 
     @Override

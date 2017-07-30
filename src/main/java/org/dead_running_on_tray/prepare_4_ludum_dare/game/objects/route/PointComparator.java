@@ -7,6 +7,8 @@ public class PointComparator<T extends Point> implements Comparator<T> {
     public int compare(T o1, T o2) {
         if (o1.getPriority() > o2.getPriority()) {
             return 1;
+        } else if (o1.getPriority() < o2.getPriority()) {
+            return -1;
         }
         return 0;
     }

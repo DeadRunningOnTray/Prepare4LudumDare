@@ -63,7 +63,9 @@ public class NPC extends Character {
     }
 
     public void nextPoint() {
-        route.nextIndex();
+        if (!route.haveAdditionalPoint()) {
+            route.nextIndex();
+        }
         /*currentDestination++;
 
         if (currentDestination + 1 > route.size()) {
@@ -80,11 +82,17 @@ public class NPC extends Character {
         route.add2Path(p);
     }
 
+    public void addVisiblePoint(Point p) {
+        System.out.println("IN NPC FOR ADDING!!!");
+        route.add2Route(p);
+    }
+
     public void removePointFromRoute(Point p) {
         route.removePointFromRoute(p);
     }
 
     public void removeInvisiblePoint(Point p) {
+        System.out.println("IN NPC!");
         route.removeAdditionalPoint(p);
     }
 }
