@@ -20,11 +20,11 @@ public interface GameConstants {
     int BACKGROUND_X = - SCREEN_WIDTH;
     int BACKGROUND_Y = - 2 * SCREEN_HEIGHT;
 
-    int START_PLAYER_POS_X = - SCREEN_WIDTH / 2;//0;
-    int START_PLAYER_POS_Y = 0;
+    int START_PLAYER_POS_X = -800;//0;
+    int START_PLAYER_POS_Y = -500;
 
-    int MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE = -SCREEN_HEIGHT / 2;
-    int MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE = 0;
+    int MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE = START_PLAYER_POS_Y;
+    int MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE = START_PLAYER_POS_Y + 30;
 
     int LEFT_BORN_ENEMY_SCREEN_WIDTH = -SCREEN_WIDTH / 2;
     int RIGHT_BORN_ENEMY_SCREEN_WIDTH = SCREEN_WIDTH / 2;
@@ -64,7 +64,7 @@ public interface GameConstants {
     int WIN_SCALE = 1;
 
     String ENEMIES_PACKAGE = "enemies/";
-    String ENEMY_NAME = "enemy1";
+    String ENEMY_NAME = "enemy2";
     String ENEMY_PART_PATH = IMG_PACKAGE + ENEMIES_PACKAGE + ENEMY_NAME + EXTENSION;
 
     String PLAYER_PACKAGE = "player/";

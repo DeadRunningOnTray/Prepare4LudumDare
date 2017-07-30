@@ -39,8 +39,8 @@ public class Route {
 
     public Point getCurrentDestination() {
         Point p = null;
-        if (routePriority.peek().getPriority() > 0) {
-
+        if (additionalPoints.size() > 0 && routePriority.peek().getPriority() > 0) {
+            return routePriority.peek();
         } else {
             if (path.size() > 0) {
                 p = path.get(index);
