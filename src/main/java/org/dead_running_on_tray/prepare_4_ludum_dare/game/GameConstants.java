@@ -52,7 +52,7 @@ public interface GameConstants {
     String ENEMY_PART_PATH = IMG_PACKAGE + ENEMIES_PACKAGE + ENEMY_NAME + EXTENSION;
 
     String PLAYER_PACKAGE = "player/";
-    String PLAYER_NAME = "frame_1_sqr";
+    String PLAYER_NAME = "frame0";
     String PLAYER_PATH = IMG_PACKAGE + PLAYER_PACKAGE + PLAYER_NAME + EXTENSION;
 
     String LOCATION_PACKAGE = "location/";

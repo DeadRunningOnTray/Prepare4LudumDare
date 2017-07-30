@@ -100,6 +100,7 @@ public abstract class GameObject {
         sprite.bind();
 
         glBegin(GL_POLYGON);
+
         glTexCoord2f(inversedX ? 1f : 0f, 1f);
         glVertex2f(normX, normY);
         glTexCoord2f(inversedX ? 0f : 1f, 1f);
