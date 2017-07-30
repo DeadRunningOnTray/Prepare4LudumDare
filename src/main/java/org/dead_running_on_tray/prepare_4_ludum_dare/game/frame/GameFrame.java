@@ -67,8 +67,8 @@ public class GameFrame extends Frame {
         for (int i = 0; i < npcNames.length; i++) {
             //String s = npcPackage.concat(npcNames[i].concat(EXTENSION));
             npcs.add(new NPC(
-                getNPCBornX(),
-                getNPCBornY(),
+                0,//getNPCBornX(),
+                -400,//getNPCBornY(),
                 i,
                 NPC_SCALE,
                 PLAYER_PATH,
@@ -94,7 +94,9 @@ public class GameFrame extends Frame {
         //player.draw();
         //System.out.println("DRAW PLAYER!!!");
         for (NPC npc : npcs) {
-            npc.draw();
+            if (npc.isAlive()) {
+                npc.draw();
+            }
         }
         player.draw();
         for (Bullet b : bullets) {

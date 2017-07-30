@@ -20,7 +20,5 @@ public class BulletsProcessor {
                 iterator.remove();
             }
         }
-
-        System.out.println(bullets.size());
     }
 }

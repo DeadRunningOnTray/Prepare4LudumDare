@@ -35,6 +35,12 @@ public abstract class Character extends GameMovingObject {
 
     public void decHealth(int damage) {
         health -= damage;
+
+        if (health < 0) {
+            alive = false;
+        }
+
+        System.out.println(health + " " + alive);
     }
 
     private void changeHealth(int dh) {

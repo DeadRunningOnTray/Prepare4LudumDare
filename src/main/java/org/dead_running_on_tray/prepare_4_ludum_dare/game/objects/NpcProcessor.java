@@ -23,5 +23,7 @@ public class NpcProcessor {
         } else if ((int) dy < 0) {
             npc.move(0, NPC_SPEED_Y);
         }
+
+        System.out.println(npc.getHealth());
     }
 }
