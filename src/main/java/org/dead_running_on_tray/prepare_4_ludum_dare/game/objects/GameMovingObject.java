@@ -13,9 +13,13 @@ public abstract class GameMovingObject extends GameObject {
         super(x, y, id, scale, spritePath);
     }
 
-    /*public GameMovingObject(float x, float y, int id, int scale, String spritePath) {
+    public GameMovingObject(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        super(x,y,id,scale,scaleWidth, spritePath);
+    }
+
+    public GameMovingObject(float x, float y, int id, int scale, String spritePath) {
         super(x, y, id, scale, spritePath);
-    }*/
+    }
 
     /*public GameMovingObject(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
         super(x, y, id, scale, scaleWidth, spritePath);

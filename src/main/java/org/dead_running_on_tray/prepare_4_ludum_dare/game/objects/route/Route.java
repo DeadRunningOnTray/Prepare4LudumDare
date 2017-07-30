@@ -12,7 +12,7 @@ public class Route {
 
     public void add2Path(Point p) {
         path.add(p);
-        routePriority.add(p);
+        //routePriority.add(p);
     }
 
     public void add2Route(Point p) {
@@ -25,16 +25,16 @@ public class Route {
             e.printStackTrace();
         }*/
 
-        if (!additionalPoints.contains(p)) {
-            System.out.println("ADD IT!");
+        /*if (!additionalPoints.contains(p)) {
+            System.out.println("ADD IT!");*/
             additionalPoints.add(p);
             routePriority.add(p);
-        }
+        /*}
         else {
             System.out.println("DONT ADD IT!!!");
         }
 
-        System.out.println();
+        System.out.println();*/
     }
 
     public void removePointFromRoute(Point p) {
@@ -65,6 +65,10 @@ public class Route {
 
     public Point getAdditional() {
         return routePriority.peek();
+    }
+
+    public boolean isInRoute(Point p) {
+        return additionalPoints.contains(p);
     }
 
     public void nextIndex() {

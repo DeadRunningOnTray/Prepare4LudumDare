@@ -31,11 +31,11 @@ public class Point {
         this.priority = priority;
     }
 
-    public boolean isPlayer() {
+    public boolean getIsPlayer() {
         return isPlayer;
     }
 
-    public void setPlayer(boolean player) {
+    public void setIsPlayer(boolean player) {
         isPlayer = player;
     }
 

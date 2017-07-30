@@ -53,7 +53,7 @@ public class GameFrame extends Frame {
     }
 
     private int getNPCBornY() {
-        return -random.nextInt(-MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE) - (MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE - MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE);
+        return -random.nextInt(Math.abs(MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE - MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE)) + (MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE);
     }
 
     public GameFrame(String locationPackage, String locationName, String playerPackage, String playerName, String npcPackage, String ... npcNames) {
@@ -75,20 +75,28 @@ public class GameFrame extends Frame {
         npcs = new ArrayList<>();
         for (int i = 0; i < npcNames.length; i++) {
             //String s = npcPackage.concat(npcNames[i].concat(EXTENSION));
-            npcs.add(new NPC(
+            /*npcs.add(new NPC(
                 0,//getNPCBornX(),
                 -400,//getNPCBornY(),
                 i,
                 NPC_SCALE,
                 PLAYER_PATH,
                 "src/main/resources/routes/test_route"
-            ));
+            ));*/
             //npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE));
             npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, NPC_SCALE_WIDTH, ENEMY_PART_PATH));
+            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, NPC_SCALE_WIDTH, PLAYER_PATH));
         }
-        npcs.get(0).addPointToRoute(new Point(-200f, -300f));
-        npcs.get(0).addPointToRoute(new Point(200.0f, -323f));
-        npcs.get(0).addPointToRoute(new Point(135.32f, -512f));
+        npcs.get(0).addPointToRoute(new Point(-200f, -400f));
+        npcs.get(0).addPointToRoute(new Point(300f, -450f));
+        npcs.get(0).addPointToRoute(new Point(100f, -490f));
+
+        npcs.get(0).setHealth(NPC_HEALTH);
+
+        npcs.get(1).addPointToRoute(new Point(-100f, -470f));
+        npcs.get(1).addPointToRoute(new Point(400f, -490f));
+
+        npcs.get(1).setHealth(NPC_HEALTH);
 
         startTime = System.currentTimeMillis();
 
@@ -147,7 +155,7 @@ public class GameFrame extends Frame {
             }
 
             // Attack.
-            if (glfwGetKey(win, GLFW_KEY_F) == GL_TRUE &&
+            if (glfwGetKey(win, GLFW_KEY_Z) == GL_TRUE &&
                 (System.currentTimeMillis() - shootLastTime) > SHOT_DELAY_MILLIS) {
                 bullets.add(player.shoot());
                 shootLastTime = System.currentTimeMillis();
@@ -159,35 +167,29 @@ public class GameFrame extends Frame {
         }
     }
 
-    /*
-    * todo in NPC
-    * */
-
-
-
-    /*
-    * end of todo in NPC
-    * */
-
     public void moveNPCs(long win) {
         for (NPC npc : npcs) {
             if (npc.isAlive()) {
 
-                if (NpcProcessor.isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
+                if (!npc.isInRoute(lastPlayerVisiblePoint) && NpcProcessor.isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
                     Point playerCurrentPoint = player.getCoordinates();
 
                     process(npc);
 
-                    float xx = playerCurrentPoint.getX(), yy = playerCurrentPoint.getY();
+                    Point current = playerCurrentPoint;
+
+                    float xx = current.getX(), yy = current.getY();
 
                     lastPlayerVisiblePoint = new Point(xx, yy);
+                    lastPlayerVisiblePoint.setPriority(current.getPriority());
+                    lastPlayerVisiblePoint.setIsPlayer(current.getIsPlayer());
 
                     System.out.println("VISIBLE!");
-                    //npc.addVisiblePoint(lastPlayerVisiblePoint);
+                    npc.addVisiblePoint(lastPlayerVisiblePoint);
                 }
             } else {
                 System.out.println("INVISIBLE!!!");
-                //npc.removeInvisiblePoint(lastPlayerVisiblePoint);
+                npc.removeInvisiblePoint(lastPlayerVisiblePoint);
             }
 
             NpcProcessor.process(npc);

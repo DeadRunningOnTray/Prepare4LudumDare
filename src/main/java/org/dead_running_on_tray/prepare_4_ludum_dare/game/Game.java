@@ -94,7 +94,7 @@ class Game {
                         }
                     }
                     break;
-                }*/
+                }
                 case START_FRAME: {
                     switch (frameState) {
                         case TO_INSTRUCTION: {

@@ -9,7 +9,7 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.BUL
  * Game character.
  */
 public abstract class Character extends GameMovingObject {
-    private int health = MAX_HEALTH;
+    protected int health = MAX_HEALTH;
     private boolean alive = true;
     private int damage;
 
@@ -25,7 +25,7 @@ public abstract class Character extends GameMovingObject {
         return health;
     }
 
-    protected void setHealth(int health) {
+    public void setHealth(int health) {
         this.health = health;
     }
 
@@ -53,6 +53,7 @@ public abstract class Character extends GameMovingObject {
             alive = health > 0;
         }
     }
+
 
     public void move(float dx, float dy) {
         if (inversedX && dx > 0 || dx < 0 && !inversedX) {

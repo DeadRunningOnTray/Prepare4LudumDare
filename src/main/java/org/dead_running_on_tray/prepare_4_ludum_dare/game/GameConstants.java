@@ -11,9 +11,7 @@ public interface GameConstants {
     int SCREEN_WIDTH = 800;
     int SCREEN_HEIGHT = 500;
 
-
-    ///int START_PLAYER_POS_X = -3 * SCREEN_WIDTH / 4;
-   // int START_PLAYER_POS_Y = - SCREEN_WIDTH / 4;
+    int PLAYER_PRIORITY = 3;
 
 
     int BACKGROUND_X = - SCREEN_WIDTH;
@@ -28,8 +26,8 @@ public interface GameConstants {
     int LEFT_BORN_ENEMY_SCREEN_WIDTH = -SCREEN_WIDTH / 2;
     int RIGHT_BORN_ENEMY_SCREEN_WIDTH = SCREEN_WIDTH / 2;
 
-    int PLAYER_DAMAGE = 42;
-    int NPC_DAMAGE = 45;
+    int PLAYER_DAMAGE = 5;
+    int NPC_DAMAGE = 10;
 
     float VISIBLE_AREA_RADIUS = 600.0f;
     float INVISIBLE_AREA_RADIUS = 0.0f;
@@ -40,6 +38,9 @@ public interface GameConstants {
 
     float LOW_BORDER = -500f;
     float HIGH_BORDER = -300f;
+
+    float LEFT_BORDER = -900f;
+    float RIGHT_BORDER = 500f;
 
     String IMG_PACKAGE = "src/main/resources/img/";
 

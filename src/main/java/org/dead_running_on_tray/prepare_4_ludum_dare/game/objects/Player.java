@@ -4,6 +4,7 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.DynamicsType.*;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
 
 /**
  * Game player class.
@@ -40,14 +41,26 @@ public class Player extends Character{
             inversedX = !inversedX;
         }
 
-        if (dyn == JUMP || (getY() + dy > LOW_BORDER && getY() + dy < HIGH_BORDER)) {
-            coordinates.move(dx, dy);
-        } else {
-            coordinates.move(dx, 0);
-        }
+        //if ((getX() + dx > RIGHT_BORDER && getX() + dx < LEFT_BORDER))
+        {
 
-        if (getY() + dy >= HIGH_BORDER && dy < 0) {
-            coordinates.move(dx, dy);
+            if (dyn == JUMP || (getX() + dx < RIGHT_BORDER && getX() + dx > LEFT_BORDER)) {
+                System.out.println("XXXXXXX!");
+                coordinates.move(dx, 0);
+            }
+            if (dyn == JUMP || (getY() + dy > LOW_BORDER && getY() + dy < HIGH_BORDER)) {
+                System.out.println("YYYYYY!");
+                coordinates.move(0, dy);
+            }
+            /*if ((dyn == JUMP || (getY() + dy > LOW_BORDER && getY() + dy < HIGH_BORDER))) {
+                coordinates.move(dx, dy);
+            } else {
+                coordinates.move(dx, 0);
+            }*/
+
+            if (getY() + dy >= HIGH_BORDER && dy < 0) {
+                coordinates.move(dx, dy);
+            }
         }
 
         normX = coordinates.getX() / SCREEN_WIDTH;
@@ -58,7 +71,7 @@ public class Player extends Character{
     public Point getCoordinates() {
         Point p = super.getCoordinates();
         p.setPriority(PLAYER_PRIORITY);
-        p.setPlayer(true);
+        p.setIsPlayer(true);
         return p;
     }
 

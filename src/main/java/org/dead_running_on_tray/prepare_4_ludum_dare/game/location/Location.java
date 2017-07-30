@@ -6,6 +6,7 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.backgrounds.Ba
 import java.util.ArrayList;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.*;
 
 /**
  * Game location class.

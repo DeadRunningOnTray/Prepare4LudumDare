@@ -62,8 +62,12 @@ public class NPC extends Character {
             }
         } catch (IOException e) {
             System.err.println("Error while reading characters route from file!");
-            route = new ArrayList<>();
+            route = new Route();
         }
+    }
+
+    public boolean isInRoute(Point p) {
+        return route.isInRoute(p);
     }
 
     public void nextPoint() {

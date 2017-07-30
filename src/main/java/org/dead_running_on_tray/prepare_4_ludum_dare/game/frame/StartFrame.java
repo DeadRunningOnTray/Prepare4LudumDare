@@ -5,6 +5,7 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.backgrounds.Ba
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.EXTENSION;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.INSTRUCTION;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.BACKGROUND_SCALE;
 
 public class StartFrame extends Frame {
 
