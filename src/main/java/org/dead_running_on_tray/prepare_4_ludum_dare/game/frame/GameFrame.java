@@ -1,9 +1,8 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.frame;
 
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.Location;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NPC;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcRouteProcessor;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcProcessor;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Player;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 
@@ -19,7 +18,7 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcRouteProcessor.*;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcProcessor.*;
 
 public class GameFrame extends Frame {
     private Location location;
@@ -117,22 +116,7 @@ public class GameFrame extends Frame {
     * todo in NPC
     * */
 
-    public boolean isVisible(NPC npc, Character character, float radius, float radius1) {
-        Point npcPoint = npc.getCoordinates();
-        Point characterPoint = character.getCoordinates();
 
-        float npcHeight = npc.getUnit_height();
-        float npcWidth = npc.getUnit_width();
-        float characterHeight = character.getUnit_height();
-        float characterWidth = character.getUnit_width();
-
-        float x1 = npcPoint.getX() - npcWidth / 2, x2 = characterPoint.getX() - characterWidth / 2;
-        float y1 = npcPoint.getY() - npcHeight / 2, y2 = character.getY() - characterHeight / 2;
-
-        float dx = x1 - x2;
-        float dy = y1 - y2;
-        return dx * dx + dy * dy < radius * radius/* && dx * dx + dy * dy > radius1 * radius1*/;
-    }
 
     /*
     * end of todo in NPC
@@ -144,19 +128,19 @@ public class GameFrame extends Frame {
             // todo
             // make method for visible area of NPC
 
-            if (isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
+            if (NpcProcessor.isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
                 Point playerCurrentPoint = player.getCoordinates();
 
                 float xx = playerCurrentPoint.getX(), yy = playerCurrentPoint.getY();
 
                 //lastPlayerVisiblePoint = new Point(xx, yy);
 
-                //npc.addPointToRoute(player.getCoordinates());
+                npc.addPointToRoute(player.getCoordinates());
             } else {
                 //npc.removePointFromRoute(player.getCoordinates());
             }
 
-            process(npc);
+            NpcProcessor.process(npc);
         }
     }
 

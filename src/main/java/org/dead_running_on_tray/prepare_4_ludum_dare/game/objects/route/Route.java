@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class Route {
-    //private PriorityQueue<Point> routePriority = new PriorityQueue<>(new PointComparator<>());
+    private PriorityQueue<Point> routePriority = new PriorityQueue<>(new PointComparator<>());
     private ArrayList<Point> path = new ArrayList<>();
     private int index = 0;
 
@@ -18,7 +18,6 @@ public class Route {
 
     private void nextIndex() {
         int size = path.size();
-        index %= size;
         index++;
         index = ((size + (index + 1) % size) % size);
     }
