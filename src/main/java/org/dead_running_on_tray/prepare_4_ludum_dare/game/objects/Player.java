@@ -1,5 +1,7 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
+
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.DynamicsType.*;
 
@@ -16,6 +18,10 @@ public class Player extends Character{
         this.setHealth(PLAYER_HEALTH);
     }
 
+    public Player(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        super(x, y, id, scale, scaleWidth, spritePath);
+    }
+
     public int getProgress() {
         return progress;
     }
@@ -28,6 +34,7 @@ public class Player extends Character{
         progress += work;
     }
 
+    @Override
     public void move(float dx, float dy) {
         if (inversedX && dx > 0 || dx < 0 && !inversedX) {
             inversedX = !inversedX;
@@ -45,6 +52,14 @@ public class Player extends Character{
 
         normX = coordinates.getX() / SCREEN_WIDTH;
         normY = coordinates.getY() / SCREEN_HEIGHT;
+    }
+
+    @Override
+    public Point getCoordinates() {
+        Point p = super.getCoordinates();
+        p.setPriority(PLAYER_PRIORITY);
+        p.setPlayer(true);
+        return p;
     }
 
     public void jump() {

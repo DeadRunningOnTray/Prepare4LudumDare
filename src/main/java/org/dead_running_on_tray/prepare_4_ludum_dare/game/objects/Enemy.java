@@ -19,9 +19,13 @@ public class Enemy extends NPC {
         super(x, y, id, scale, spritePath, routeFile);
     }
 
+    public Enemy(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        super(x, y, id, scale, scaleWidth, spritePath);
+    }
+
     public void becomeAggressiveTo(Character c) {
         aggressive = true;
-        route.clear();
-        route.add(c.getCoordinates());
+        /*route.clear();
+        route.add(c.getCoordinates());*/
     }
 }

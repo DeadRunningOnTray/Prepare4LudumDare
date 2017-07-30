@@ -6,5 +6,6 @@ public enum FrameState {
     TO_WIN,
     TO_LOOSE,
     TO_GAME,
-    TO_START
+    TO_START,
+    TO_INSTRUCTION
 }

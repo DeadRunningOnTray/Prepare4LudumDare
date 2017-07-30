@@ -10,4 +10,5 @@ public enum State {
     START_FRAME,
     WIN_FRAME,
     LOOSE_FRAME,
+    INSTRUCTION_FRAME
 }

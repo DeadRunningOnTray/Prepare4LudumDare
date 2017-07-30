@@ -2,6 +2,7 @@ package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
 
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Route;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,7 +17,8 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*
  * Non playable character.
  */
 public class NPC extends Character {
-    protected ArrayList<Point> route = new ArrayList<>();
+    /*protected ArrayList<Point> route = new ArrayList<>();*/
+    protected Route route = new Route();
     private int currentDestination = 0;
 
     public NPC(int x, int y, int id, int scale, String spritePath) {
@@ -24,9 +26,13 @@ public class NPC extends Character {
         //route = new ArrayList<>();
     }
 
-    public NPC(int x, int y, int id, int scale, String spritePath, ArrayList<Point> route) {
+    public NPC(int x, int y, int id, int scale, String spritePath, Route route) {
         super(x, y, id, scale, spritePath);
         this.route = route;
+    }
+
+    public NPC(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        super(x, y, id, scale, scaleWidth, spritePath);
     }
 
     /**
@@ -48,7 +54,7 @@ public class NPC extends Character {
 
             while (line != null) {
                 String[] coordinates = line.split(",");
-                route.add(new Point(
+                route.add2Path(new Point(
                     Integer.parseInt(coordinates[0]),
                     Integer.parseInt(coordinates[1])
                 ));
@@ -60,20 +66,37 @@ public class NPC extends Character {
         }
     }
 
-    void nextPoint() {
-        currentDestination++;
+    public void nextPoint() {
+        if (!route.haveAdditionalPoint()) {
+            route.nextIndex();
+        }
+        /*currentDestination++;
 
         if (currentDestination + 1 > route.size()) {
             currentDestination = 0;
-        }
+        }*/
     }
 
     public Point getCurrentDestination() {
-        int n = 0;
-        return route.get(currentDestination);
+        return route.getCurrentDestination();
+        /*return route.get(currentDestination);*/
     }
 
     public void addPointToRoute(Point p) {
-        route.add(p);
+        route.add2Path(p);
+    }
+
+    public void addVisiblePoint(Point p) {
+        System.out.println("IN NPC FOR ADDING!!!");
+        route.add2Route(p);
+    }
+
+    public void removePointFromRoute(Point p) {
+        route.removePointFromRoute(p);
+    }
+
+    public void removeInvisiblePoint(Point p) {
+        System.out.println("IN NPC!");
+        route.removeAdditionalPoint(p);
     }
 }

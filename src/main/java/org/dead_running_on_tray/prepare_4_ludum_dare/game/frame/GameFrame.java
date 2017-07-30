@@ -1,22 +1,25 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.frame;
 
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Bullet;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.Location;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.Location;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
+import org.lwjgl.stb.STBEasyFont;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.*;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_Y;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_X;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.NPC_SCALE;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.PLAYER_SCALE;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.frame.frame_state.FrameState.*;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.logic.WinOrLose.*;
 
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_X;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_Y;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 
@@ -35,13 +38,18 @@ public class GameFrame extends Frame {
     //shooting timer.
     private long shootLastTime;
 
+    private Point lastPlayerVisiblePoint;
+    private long lastVisibleTime = -1;
+    private long now;
+
     //private ILocation.Option currentLocation = ILocation.Option.START;
     //private HashMap<ILocation.Option, ILocation> locationsMap;
 
     private Random random = new Random(/*42*/System.currentTimeMillis());
 
     private int getNPCBornX() {
-        return (random.nextBoolean() ? LEFT_BORN_ENEMY_SCREEN_WIDTH : RIGHT_BORN_ENEMY_SCREEN_WIDTH);
+        return RIGHT_BORN_ENEMY_SCREEN_WIDTH;
+        //return (random.nextBoolean() ? LEFT_BORN_ENEMY_SCREEN_WIDTH : RIGHT_BORN_ENEMY_SCREEN_WIDTH);
     }
 
     private int getNPCBornY() {
@@ -50,18 +58,19 @@ public class GameFrame extends Frame {
 
     public GameFrame(String locationPackage, String locationName, String playerPackage, String playerName, String npcPackage, String ... npcNames) {
 
+
         System.out.println("background path = " + BACKGROUND_PATH);
         System.out.println("player path = " + PLAYER_PATH);
         System.out.println("enemy path = " + ENEMY_PART_PATH);
 
         location = new Location(BACKGROUND_PATH);
         player = new Player(
-            START_PLAYER_POS_X,
-            START_PLAYER_POS_Y,
-            1,
-            PLAYER_SCALE,
-            PLAYER_PATH
-        );
+                START_PLAYER_POS_X,
+                START_PLAYER_POS_Y,
+                1,
+                PLAYER_SCALE,
+                PLAYER_SCALE_WIDTH,
+                PLAYER_PATH);
         bullets = new ArrayList<>();
         npcs = new ArrayList<>();
         for (int i = 0; i < npcNames.length; i++) {
@@ -75,14 +84,12 @@ public class GameFrame extends Frame {
                 "src/main/resources/routes/test_route"
             ));
             //npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE));
+            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, NPC_SCALE_WIDTH, ENEMY_PART_PATH));
         }
-        //ArrayList<Point> points = new ArrayList<>();
-        //points.add(new Point(0.0f, 0.0f));
-        //npcs.add(new NPC(getNPCBornX(), getNPCBornY(), 3, NPC_SCALE, PLAYER_PATH));
-        npcs.get(0).addPointToRoute(new Point(0f, 0f));
-        npcs.get(0).addPointToRoute(new Point(0.5f, 0.3f));
-        // draw it!
-        //location.draw();
+        npcs.get(0).addPointToRoute(new Point(-200f, -300f));
+        npcs.get(0).addPointToRoute(new Point(200.0f, -323f));
+        npcs.get(0).addPointToRoute(new Point(135.32f, -512f));
+
         startTime = System.currentTimeMillis();
 
         System.out.println("END OF CONSTRUCTOR!");
@@ -91,8 +98,6 @@ public class GameFrame extends Frame {
     @Override
     public void draw() {
         location.draw();
-        //player.draw();
-        //System.out.println("DRAW PLAYER!!!");
         for (NPC npc : npcs) {
             if (npc.isAlive()) {
                 npc.draw();
@@ -158,15 +163,7 @@ public class GameFrame extends Frame {
     * todo in NPC
     * */
 
-    public boolean isVisible(NPC npc, Character character, float radius, float radius1) {
-        Point npcPoint = npc.getCoordinates();
-        Point characterPoint = character.getCoordinates();
-        float x1 = npcPoint.getX(), x2 = characterPoint.getX();
-        float y1 = npcPoint.getY(), y2 = character.getY();
-        float dx = x1 - x2;
-        float dy = y1 - y2;
-        return dx * dx + dy * dy < radius * radius && dx * dx + dy * dy > radius1 * radius1;
-    }
+
 
     /*
     * end of todo in NPC
@@ -175,17 +172,25 @@ public class GameFrame extends Frame {
     public void moveNPCs(long win) {
         for (NPC npc : npcs) {
             if (npc.isAlive()) {
-                //Point playerPoint = player.getCoordinates();
 
-                // todo
-                // make method for visible area of NPC
+                if (NpcProcessor.isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
+                    Point playerCurrentPoint = player.getCoordinates();
 
-                if (isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
-                    npc.addPointToRoute(player.getCoordinates());
+                    process(npc);
+
+                    float xx = playerCurrentPoint.getX(), yy = playerCurrentPoint.getY();
+
+                    lastPlayerVisiblePoint = new Point(xx, yy);
+
+                    System.out.println("VISIBLE!");
+                    //npc.addVisiblePoint(lastPlayerVisiblePoint);
                 }
-
-                process(npc);
+            } else {
+                System.out.println("INVISIBLE!!!");
+                //npc.removeInvisiblePoint(lastPlayerVisiblePoint);
             }
+
+            NpcProcessor.process(npc);
         }
     }
 

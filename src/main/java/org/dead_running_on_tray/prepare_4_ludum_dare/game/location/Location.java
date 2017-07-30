@@ -15,13 +15,8 @@ public class Location implements ILocation {
     private ArrayList<GameObject> backObjects;
 
     public Location(String path) {
-        background = new Background (
-            BACKGROUND_X,
-            BACKGROUND_Y,
-            0,
-            2,
-            path
-        );
+        System.out.println("BACKGOUND PATH = " + BACKGROUND_PATH);
+        background = new Background(BACKGROUND_X, BACKGROUND_Y, 0, BACKGROUND_SCALE, path);
         backObjects = new ArrayList<>();
     }
 
