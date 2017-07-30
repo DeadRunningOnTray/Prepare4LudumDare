@@ -5,6 +5,8 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.backgrounds.Ba
 
 import java.util.ArrayList;
 
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
+
 /**
  * Game location class.
  */
@@ -13,7 +15,8 @@ public class Location implements ILocation {
     private ArrayList<GameObject> backObjects;
 
     public Location(String path) {
-        background = new Background(0, 0, 0, 1, path);
+        System.out.println("BACKGOUND PATH = " + BACKGROUND_PATH);
+        background = new Background(BACKGROUND_X, BACKGROUND_Y, 0, BACKGROUND_SCALE, path);
         backObjects = new ArrayList<>();
     }
 

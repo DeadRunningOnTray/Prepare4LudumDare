@@ -49,7 +49,7 @@ public class GameFrame extends Frame {
         System.out.println("player path = " + PLAYER_PATH);
         System.out.println("enemy path = " + ENEMY_PART_PATH);
 
-        location = new Location(LOCATION_PACKAGE + LOCATION_NAME + EXTENSION);
+        location = new Location(BACKGROUND_PATH);
         player = new Player(
                 START_PLAYER_POS_X,
                 START_PLAYER_POS_Y,
@@ -60,16 +60,10 @@ public class GameFrame extends Frame {
         for (int i = 0; i < npcNames.length; i++) {
             //String s = npcPackage.concat(npcNames[i].concat(EXTENSION));
             npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, PLAYER_PATH));
-            //npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE));
         }
-        //ArrayList<Point> points = new ArrayList<>();
-        //points.add(new Point(0.0f, 0.0f));
-        //npcs.add(new NPC(getNPCBornX(), getNPCBornY(), 3, NPC_SCALE, PLAYER_PATH));
         npcs.get(0).addPointToRoute(new Point(0f, 0f));
         npcs.get(0).addPointToRoute(new Point(0.5f, 0.3f));
-        // draw it!
-        //location.draw();
-        this.draw();
+
         startTime = System.currentTimeMillis();
 
         System.out.println("END OF CONSTRUCTOR!");
@@ -78,8 +72,6 @@ public class GameFrame extends Frame {
     @Override
     public void draw() {
         location.draw();
-        //player.draw();
-        //System.out.println("DRAW PLAYER!!!");
         for (NPC npc : npcs) {
             npc.draw();
         }
@@ -107,12 +99,12 @@ public class GameFrame extends Frame {
             player.move(0, 0.5f);
         } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
             player.move(0, -0.5f);
-        } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
-            player.move(0.5f, 0);
-        } else if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
-            player.move(-0.5f, 0);
         }
-        //this.draw();
+        if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
+            player.move(1f, 0);
+        } else if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
+            player.move(-1f, 0);
+        }
     }
 
     /*

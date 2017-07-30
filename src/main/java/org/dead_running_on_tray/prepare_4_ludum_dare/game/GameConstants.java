@@ -13,8 +13,14 @@ public interface GameConstants {
   
     ///int START_PLAYER_POS_X = -3 * SCREEN_WIDTH / 4;
    // int START_PLAYER_POS_Y = - SCREEN_WIDTH / 4;
-  
-    int START_PLAYER_POS_X = 0;
+
+
+    int BACKGROUND_SCALE = 4;
+
+    int BACKGROUND_X = - SCREEN_WIDTH;
+    int BACKGROUND_Y = - 10 * SCREEN_HEIGHT / 4;
+
+    int START_PLAYER_POS_X = - SCREEN_WIDTH / 2;//0;
     int START_PLAYER_POS_Y = 0;
 
     int MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE = -SCREEN_HEIGHT / 2;
