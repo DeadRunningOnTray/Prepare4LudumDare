@@ -1,6 +1,7 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.BULLET_PATH;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.SCREEN_HEIGHT;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.MAX_HEALTH;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.BULLET_SCALE;
 
@@ -9,7 +10,7 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.BUL
  */
 public abstract class Character extends GameMovingObject {
     private int health = MAX_HEALTH;
-    private boolean isAlive = true;
+    private boolean alive = true;
     private int damage;
 
     public Character(int x, int y, int id, int scale, String spritePath) {
@@ -37,16 +38,38 @@ public abstract class Character extends GameMovingObject {
     }
 
     private void changeHealth(int dh) {
-        if (isAlive) {
+        if (alive) {
             health += dh;
-            isAlive = health > 0;
+            alive = health > 0;
         }
+    }
+
+    public void move(float dx, float dy) {
+        //player.getY() > LOW_BORDER
+        //player.getY() < HIGH_BORDER
+
+        if (inversedX && dx > 0 || dx < 0 && !inversedX) {
+            inversedX = !inversedX;
+        }
+
+        if (getY() + dy > LOW_BORDER && getY() + dy < HIGH_BORDER) {
+            coordinates.move(dx, dy);
+        } else {
+            coordinates.move(dx, 0);
+        }
+
+        normX = coordinates.getX() / SCREEN_WIDTH;
+        normY = coordinates.getY() / SCREEN_HEIGHT;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
     public Bullet shoot() {
         Bullet b = new Bullet(
-            0,
-            0,
+            getX() + 200,
+            getY() + 150,
             id,
             BULLET_SCALE,
             BULLET_PATH

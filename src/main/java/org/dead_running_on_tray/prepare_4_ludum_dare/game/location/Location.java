@@ -5,8 +5,7 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.backgrounds.Ba
 
 import java.util.ArrayList;
 
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.SCREEN_HEIGHT;
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.SCREEN_WIDTH;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
 
 /**
  * Game location class.
@@ -17,8 +16,8 @@ public class Location implements ILocation {
 
     public Location(String path) {
         background = new Background (
-            -SCREEN_WIDTH,
-            -3 * SCREEN_HEIGHT / 2,
+            BACKGROUND_X,
+            BACKGROUND_Y,
             0,
             2,
             path

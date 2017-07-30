@@ -181,7 +181,8 @@ class Game {
 
                 ((GameFrame) frame).movePlayer(win);
                 ((GameFrame) frame).moveNPCs(win);
-                ((GameFrame) frame).moveBullets();
+                ((GameFrame) frame).processObjects();
+                ((GameFrame) frame).processDamage();
 
                 try {
                     Thread.sleep(PAUSE_FOR_MOVING);

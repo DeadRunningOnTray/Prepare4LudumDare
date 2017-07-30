@@ -4,20 +4,23 @@ public interface GameConstants {
     String TITLE = "P4LD";
 
     int PAUSE_DELAY_MILLIS = 250;
-
     int PAUSE_FOR_MOVING = 60;
+    int SHOT_DELAY_MILLIS = 250;
 
     int SCREEN_WIDTH = 800;
-    int SCREEN_HEIGHT = 600;
+    int SCREEN_HEIGHT = 500;
+
+    int BACKGROUND_X = -SCREEN_WIDTH;
+    int BACKGROUND_Y = -2 * SCREEN_HEIGHT;
   
     ///int START_PLAYER_POS_X = -3 * SCREEN_WIDTH / 4;
    // int START_PLAYER_POS_Y = - SCREEN_WIDTH / 4;
   
-    int START_PLAYER_POS_X = 0;
-    int START_PLAYER_POS_Y = 0;
+    int START_PLAYER_POS_X = -800;
+    int START_PLAYER_POS_Y = -500;
 
-    int MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE = -SCREEN_HEIGHT / 2;
-    int MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE = 0;
+    int MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE = START_PLAYER_POS_Y;
+    int MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE = MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE + 30;
 
     int LEFT_BORN_ENEMY_SCREEN_WIDTH = -SCREEN_WIDTH / 2;
     int RIGHT_BORN_ENEMY_SCREEN_WIDTH = SCREEN_WIDTH / 2;
@@ -31,12 +34,16 @@ public interface GameConstants {
     int PLAYER_HEALTH = 2000;
     int NPC_HEALTH = 1000;
 
+
+    float LOW_BORDER = -500f;
+    float HIGH_BORDER = -300f;
+
     String IMG_PACKAGE = "src/main/resources/img/";
 
     String EXTENSION = ".png";
 
     String BACKGROUND_PACKAGE = "background/";
-    String BACKGROUND_NAME = "start_location";
+    String BACKGROUND_NAME = "start_location_laptop";
     String BACKGROUND_PATH = IMG_PACKAGE + BACKGROUND_PACKAGE + BACKGROUND_NAME + EXTENSION;
 
     String ENEMIES_PACKAGE = "enemies/";

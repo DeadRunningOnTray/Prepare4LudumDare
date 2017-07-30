@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_Y;
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_X;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.*;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.NPC_SCALE;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.PLAYER_SCALE;
 
@@ -32,6 +31,10 @@ public class GameFrame extends Frame {
     private long startTime;
     private long endTime;
 
+
+    //shooting timer.
+    private long shootLastTime;
+
     //private ILocation.Option currentLocation = ILocation.Option.START;
     //private HashMap<ILocation.Option, ILocation> locationsMap;
 
@@ -42,7 +45,7 @@ public class GameFrame extends Frame {
     }
 
     private int getNPCBornY() {
-        return -random.nextInt(-MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE) + MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE;
+        return -random.nextInt(-MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE) - (MAX_BORN_ENEMY_SCREEN_HEIGHT_RANGE - MIN_BORN_ENEMY_SCREEN_HEIGHT_RANGE);
     }
 
     public GameFrame(String locationPackage, String locationName, String playerPackage, String playerName, String npcPackage, String ... npcNames) {
@@ -136,8 +139,10 @@ public class GameFrame extends Frame {
         }
 
         // Attack.
-        if (glfwGetKey(win, GLFW_KEY_F) == GL_TRUE) {
+        if (glfwGetKey(win, GLFW_KEY_F) == GL_TRUE &&
+            (System.currentTimeMillis() - shootLastTime) > SHOT_DELAY_MILLIS) {
             bullets.add(player.shoot());
+            shootLastTime = System.currentTimeMillis();
         }
 
         //this.draw();
@@ -165,24 +170,30 @@ public class GameFrame extends Frame {
 
     public void moveNPCs(long win) {
         for (NPC npc : npcs) {
+            if (npc.isAlive()) {
+                //Point playerPoint = player.getCoordinates();
 
-            //Point playerPoint = player.getCoordinates();
+                // todo
+                // make method for visible area of NPC
 
-            // todo
-            // make method for visible area of NPC
+                if (isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
+                    npc.addPointToRoute(player.getCoordinates());
+                }
 
-            if (isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
-                npc.addPointToRoute(player.getCoordinates());
+                process(npc);
             }
-
-            process(npc);
-
         }
     }
 
-    public void moveBullets() {
+    public void processObjects() {
+        BulletsProcessor.process(bullets);
+    }
+
+    /*
+    public void processDamage() {
         for (Bullet b : bullets) {
-            b.move();
+            for (NPC npc)
         }
     }
+    */
 }
