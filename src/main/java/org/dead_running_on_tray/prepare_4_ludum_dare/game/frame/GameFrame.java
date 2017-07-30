@@ -1,16 +1,16 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.frame;
 
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.Location;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NPC;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcRouteProcessor;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Player;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_Y;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_X;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.NPC_SCALE;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.PLAYER_SCALE;
 
@@ -49,17 +49,24 @@ public class GameFrame extends Frame {
         System.out.println("player path = " + PLAYER_PATH);
         System.out.println("enemy path = " + ENEMY_PART_PATH);
 
-        location = new Location(LOCATION_PACKAGE + LOCATION_NAME + EXTENSION);
+        location = new Location(BACKGROUND_PATH);
         player = new Player(
-                START_PLAYER_POS_X,
-                START_PLAYER_POS_Y,
-                1,
-                PLAYER_SCALE,
-                PLAYER_PATH);
+            START_PLAYER_POS_X,
+            START_PLAYER_POS_Y,
+            1,
+            PLAYER_SCALE,
+            PLAYER_PATH
+        );
         npcs = new ArrayList<>();
         for (int i = 0; i < npcNames.length; i++) {
             //String s = npcPackage.concat(npcNames[i].concat(EXTENSION));
-            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, PLAYER_PATH));
+            npcs.add(new NPC(
+                getNPCBornX(),
+                getNPCBornY(),
+                i,
+                NPC_SCALE,
+                PLAYER_PATH,
+                "src/main/resources/routes/test_route"));
             //npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE));
         }
         //ArrayList<Point> points = new ArrayList<>();
@@ -69,7 +76,6 @@ public class GameFrame extends Frame {
         npcs.get(0).addPointToRoute(new Point(0.5f, 0.3f));
         // draw it!
         //location.draw();
-        this.draw();
         startTime = System.currentTimeMillis();
 
         System.out.println("END OF CONSTRUCTOR!");
@@ -103,16 +109,27 @@ public class GameFrame extends Frame {
     }
 
     public void movePlayer(long win) {
-        if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
-            player.move(0, 0.5f);
-        } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
-            player.move(0, -0.5f);
-        } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
-            player.move(0.5f, 0);
-        } else if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
-            player.move(-0.5f, 0);
+        if (player.isWalking()) {
+            if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
+                player.move(0, PLAYER_SPEED_Y);
+            } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
+                player.move(0, -PLAYER_SPEED_Y);
+            }
         }
+
+        if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
+            player.move(PLAYER_SPEED_X, 0);
+        } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
+            player.move(-PLAYER_SPEED_X, 0);
+        }
+
+        if (player.isWalking() && glfwGetKey(win, GLFW_KEY_SPACE) == GL_TRUE) {
+            player.jump();
+        }
+
         //this.draw();
+
+        PlayerJumpsProcessor.process(player);
     }
 
     /*
