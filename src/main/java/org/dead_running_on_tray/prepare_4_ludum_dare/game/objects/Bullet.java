@@ -1,4 +1,4 @@
-package org.dead_running_on_tray.prepare_4_ludum_dare.game;
+package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameMovingObject;
 
