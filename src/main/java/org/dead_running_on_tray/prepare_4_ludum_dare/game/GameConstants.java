@@ -6,11 +6,13 @@ public interface GameConstants {
     int JUMP_DURATION_MILLIS = 1000;
     int PAUSE_DELAY_MILLIS = 250;
 
+    int PAUSE_FOR_MOVING = 60;
+
     int SCREEN_WIDTH = 800;
     int SCREEN_HEIGHT = 600;
   
-    int START_PLAYER_POS_X = -3 * SCREEN_WIDTH / 4;
-    int START_PLAYER_POS_Y = - SCREEN_WIDTH / 4;
+    ///int START_PLAYER_POS_X = -3 * SCREEN_WIDTH / 4;
+   // int START_PLAYER_POS_Y = - SCREEN_WIDTH / 4;
   
     int START_PLAYER_POS_X = 0;
     int START_PLAYER_POS_Y = 0;
@@ -23,6 +25,9 @@ public interface GameConstants {
 
     int PLAYER_DAMAGE = 42;
     int NPC_DAMAGE = 45;
+
+    float VISIBLE_AREA_RADIUS = 42.42f;
+    float INVISIBLE_AREA_RADIUS = 10.42f;
 
     int PLAYER_HEALTH = 2000;
     int NPC_HEALTH = 1000;

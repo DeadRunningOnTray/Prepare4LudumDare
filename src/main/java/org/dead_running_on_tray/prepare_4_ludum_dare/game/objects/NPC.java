@@ -16,12 +16,12 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*
  * Non playable character.
  */
 public class NPC extends Character {
-    protected ArrayList<Point> route;
+    protected ArrayList<Point> route = new ArrayList<>();
     private int currentDestination = 0;
 
     public NPC(int x, int y, int id, int scale, String spritePath) {
         super(x, y, id, scale, spritePath);
-        route = new ArrayList<>();
+        //route = new ArrayList<>();
     }
 
     public NPC(int x, int y, int id, int scale, String spritePath, ArrayList<Point> route) {
@@ -41,7 +41,7 @@ public class NPC extends Character {
      */
     public NPC(int x, int y, int id, int scale, String spritePath, String routeFile) {
         super(x, y, id, scale, spritePath);
-        route = new ArrayList<>();
+        //route = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(routeFile)))) {
             String line = reader.readLine();

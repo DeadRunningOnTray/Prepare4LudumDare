@@ -11,7 +11,7 @@ public abstract class GameObject {
     private int id;
     protected Point coordinates;
     private Texture sprite;
-    private boolean inversedX = false;
+    protected boolean inversedX = false;
 
     /**
      * For inner using.
@@ -62,24 +62,7 @@ public abstract class GameObject {
     public Texture getSprite() {
         return sprite;
     }
-  
-// todo move "move" to GameMovingObject
-// |
-// |
-// V
-/* bewrrrie
-    public void move(float dx, float dy) {
-        if (inversedX && dx > 0 || dx < 0 && !inversedX) {
-            inversedX = !inversedX;
-        }
 
-        coordinates.move(dx, dy);
-        normX = coordinates.getX() / SCREEN_WIDTH;
-        normY = coordinates.getY() / SCREEN_HEIGHT;
-    }
-
-=======
- master*/
     public void draw() {
         sprite.bind();
 

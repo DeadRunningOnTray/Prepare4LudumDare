@@ -33,8 +33,6 @@ class Game {
 
     private Frame frame = new StartFrame();
 
-    StaticObject background;
-
     Game() {
         init();
 
@@ -160,7 +158,6 @@ class Game {
                 if (glfwGetKey(win, GLFW_KEY_ENTER) == GL_TRUE) {
                     frame.setFrameState(FrameState.TO_GAME);
                     System.out.println("FROM START TO GAME!!!!");
-                    //System.err.println("Pause is unset.");
                 }
                 break;
             }
@@ -169,7 +166,6 @@ class Game {
                 if (glfwGetKey(win, GLFW_KEY_ENTER) == GL_TRUE) {
                     frame.setFrameState(FrameState.TO_LOOSE);
                     System.out.println("FROM WIN/LOOSE TO START!!!!");
-                    //System.err.println("Pause is unset.");
                 }
                 break;
             }
@@ -193,32 +189,17 @@ class Game {
             }
 
             case GAME: {
-                ((GameFrame) frame).movePlayer(win);
-                /*if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
-                    player.move(0, 0.5f);
-                } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
-                    player.move(0, -0.5f);
-                }*/
 
-                if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
-                    player.move(1, 0);
-                } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
-                    player.move(-1, 0);
+                ((GameFrame) frame).movePlayer(win);
+                ((GameFrame) frame).moveNPCs(win);
+
+                try {
+                    Thread.sleep(PAUSE_FOR_MOVING);
+                } catch (Exception e) {
+                    System.err.println(e);
                 }
 
                 if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
-
-                  // todo
-                  /*<<<<<<< bewrrrie
-                    try {
-                        Thread.sleep(PAUSE_DELAY_MILLIS);
-                    } catch (Exception e) {
-                        System.err.println();
-                    }
-
-                    state = State.PAUSE;
-                    System.err.println("Pause is set.");
-                    =======*/
                     frame.setFrameState(FrameState.TO_START);
                     System.err.println("WELCOME TO START!");
                 }
@@ -226,30 +207,5 @@ class Game {
                 break;
             }
         }
-    }
-
-    /**
-     * Move all NPC according to their inner route.
-     * Change players coordinates while jumping.
-     */
-    private void processCharactersMovement() {
-        for (NPC npc : NPCs) {
-            NpcRouteProcessor.process(npc);
-        }
-    }
-
-
-    /**
-     * Draw main menu buttons and decorations.
-     */
-    private void drawMainMenu() {
-        //
-    }
-
-    /**
-     * Draw pause sign.
-     */
-    private void drawPauseSign() {
-
     }
 }

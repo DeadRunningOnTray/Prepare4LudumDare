@@ -6,18 +6,20 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.S
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.SCREEN_WIDTH;
 import static org.lwjgl.opengl.GL11.*;
 
-public class GameMovingObject extends GameObject {
+public abstract class GameMovingObject extends GameObject {
 
-    GameMovingObject(int x, int y, int id, int scale, String spritePath) {
+
+    public GameMovingObject(int x, int y, int id, int scale, String spritePath) {
         super(x, y, id, scale, spritePath);
     }
 
     public void move(float dx, float dy) {
-        x += dx;
-        y += dy;
-        normX = x / SCREEN_WIDTH;
-        normY = y / SCREEN_HEIGHT;
+        if (inversedX && dx > 0 || dx < 0 && !inversedX) {
+            inversedX = !inversedX;
+        }
 
-        System.out.println(x + " " + y);
+        coordinates.move(dx, dy);
+        normX = coordinates.getX() / SCREEN_WIDTH;
+        normY = coordinates.getY() / SCREEN_HEIGHT;
     }
 }

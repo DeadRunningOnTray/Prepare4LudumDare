@@ -1,8 +1,11 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.frame;
 
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.Location;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NPC;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcRouteProcessor;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Player;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,6 +19,8 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.logic.WinOrLose
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
+
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcRouteProcessor.*;
 
 public class GameFrame extends Frame {
     private Location location;
@@ -52,11 +57,16 @@ public class GameFrame extends Frame {
                 PLAYER_SCALE,
                 PLAYER_PATH);
         npcs = new ArrayList<>();
-        /*for (int i = 0; i < npcNames.length; i++) {
+        for (int i = 0; i < npcNames.length; i++) {
             //String s = npcPackage.concat(npcNames[i].concat(EXTENSION));
-            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE));
-        }*/
-
+            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, PLAYER_PATH));
+            //npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE));
+        }
+        //ArrayList<Point> points = new ArrayList<>();
+        //points.add(new Point(0.0f, 0.0f));
+        //npcs.add(new NPC(getNPCBornX(), getNPCBornY(), 3, NPC_SCALE, PLAYER_PATH));
+        npcs.get(0).addPointToRoute(new Point(0f, 0f));
+        npcs.get(0).addPointToRoute(new Point(0.5f, 0.3f));
         // draw it!
         //location.draw();
         this.draw();
@@ -97,8 +107,47 @@ public class GameFrame extends Frame {
             player.move(0, 0.5f);
         } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
             player.move(0, -0.5f);
+        } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
+            player.move(0.5f, 0);
+        } else if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
+            player.move(-0.5f, 0);
         }
-        this.draw();
+        //this.draw();
+    }
+
+    /*
+    * todo in NPC
+    * */
+
+    public boolean isVisible(NPC npc, Character character, float radius, float radius1) {
+        Point npcPoint = npc.getCoordinates();
+        Point characterPoint = character.getCoordinates();
+        float x1 = npcPoint.getX(), x2 = characterPoint.getX();
+        float y1 = npcPoint.getY(), y2 = character.getY();
+        float dx = x1 - x2;
+        float dy = y1 - y2;
+        return dx * dx + dy * dy < radius * radius && dx * dx + dy * dy > radius1 * radius1;
+    }
+
+    /*
+    * end of todo in NPC
+    * */
+
+    public void moveNPCs(long win) {
+        for (NPC npc : npcs) {
+
+            //Point playerPoint = player.getCoordinates();
+
+            // todo
+            // make method for visible area of NPC
+
+            if (isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
+                npc.addPointToRoute(player.getCoordinates());
+            }
+
+            process(npc);
+
+        }
     }
 
 }
