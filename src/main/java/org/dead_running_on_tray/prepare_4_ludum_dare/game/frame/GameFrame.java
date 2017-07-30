@@ -4,6 +4,7 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.Location;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NPC;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcProcessor;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Player;
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.PlayerJumpsProcessor;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route.Point;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.frame.frame_state.FrameState.*;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.logic.WinOrLose.*;
 
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_X;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.PLAYER_SPEED_Y;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
@@ -100,16 +103,27 @@ public class GameFrame extends Frame {
     }
 
     public void movePlayer(long win) {
-        if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
-            player.move(0, 1f);
-        } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
-            player.move(0, -1f);
+        if (player.isWalking()) {
+            if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
+                player.move(0, PLAYER_SPEED_Y);
+            } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
+                player.move(0, -PLAYER_SPEED_Y);
+            }
         }
-        if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
-            player.move(2f, 0);
-        } else if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
-            player.move(-2f, 0);
+
+        if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
+            player.move(PLAYER_SPEED_X, 0);
+        } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
+            player.move(-PLAYER_SPEED_X, 0);
         }
+
+        if (player.isWalking() && glfwGetKey(win, GLFW_KEY_SPACE) == GL_TRUE) {
+            player.jump();
+        }
+
+        //this.draw();
+
+        PlayerJumpsProcessor.process(player);
     }
 
     /*
