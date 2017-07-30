@@ -3,7 +3,6 @@ package org.dead_running_on_tray.prepare_4_ludum_dare.game;
 public interface GameConstants {
     String TITLE = "P4LD";
 
-    int JUMP_DURATION_MILLIS = 1000;
     int PAUSE_DELAY_MILLIS = 250;
 
     int PAUSE_FOR_MOVING = 60;

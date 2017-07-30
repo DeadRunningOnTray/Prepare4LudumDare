@@ -1,18 +1,14 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.DynamicsType.*;
+
 /**
  * Game player class.
  */
 public class Player extends Character{
-    private enum Dynamics {
-        WALK,
-        JUMP,
-        FALL
-    }
-
     private int progress = 0;
-    private Dynamics dyn = Dynamics.WALK;
+    private DynamicsType dyn = WALK;
 
     public Player(int x, int y, int id, int scale, String spritePath) {
         super(x, y, id, scale, spritePath);
@@ -33,18 +29,26 @@ public class Player extends Character{
     }
 
     public void jump() {
-        dyn = Dynamics.JUMP;
+        dyn = JUMP;
+    }
+
+    public void fall() {
+        dyn = FALL;
+    }
+
+    public void land() {
+        dyn = WALK;
     }
 
     public boolean isWalking() {
-        return dyn == Dynamics.WALK;
+        return dyn == WALK;
     }
 
     public boolean isInJump() {
-        return dyn == Dynamics.JUMP;
+        return dyn == JUMP;
     }
 
     public boolean isFalling() {
-        return dyn == Dynamics.FALL;
+        return dyn == FALL;
     }
 }

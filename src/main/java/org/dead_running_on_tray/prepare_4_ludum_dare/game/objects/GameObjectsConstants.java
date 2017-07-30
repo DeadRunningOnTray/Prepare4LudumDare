@@ -9,5 +9,6 @@ public interface GameObjectsConstants {
     float NPC_SPEED_X = 2.0f;
     float NPC_SPEED_Y = 1.0f;
 
-    int JUMP_DURATION_MILLIS = 250;
+    float JUMP_Y_INCREMENT = 5;
+    int JUMP_DURATION_MILLIS = 750;
 }

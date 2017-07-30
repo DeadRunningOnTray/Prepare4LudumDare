@@ -109,7 +109,7 @@ public class GameFrame extends Frame {
     }
 
     public void movePlayer(long win) {
-        if (!player.isInJump()) {
+        if (player.isWalking()) {
             if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
                 player.move(0, PLAYER_SPEED_Y);
             } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
