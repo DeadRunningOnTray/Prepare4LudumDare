@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.NPC_SCALE;
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.PLAYER_SCALE;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.frame.frame_state.FrameState.*;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.logic.WinOrLose.*;
 
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 
@@ -60,14 +59,16 @@ public class GameFrame extends Frame {
                 START_PLAYER_POS_Y,
                 1,
                 PLAYER_SCALE,
+                PLAYER_SCALE_WIDTH,
                 PLAYER_PATH);
         npcs = new ArrayList<>();
         for (int i = 0; i < npcNames.length; i++) {
             //String s = npcPackage.concat(npcNames[i].concat(EXTENSION));
-            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, ENEMY_PART_PATH));
+            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, NPC_SCALE_WIDTH, ENEMY_PART_PATH));
         }
         npcs.get(0).addPointToRoute(new Point(0f, 0f));
         npcs.get(0).addPointToRoute(new Point(0.5f, 0.3f));
+        npcs.get(0).addPointToRoute(new Point(0.7f, 0.2f));
 
         startTime = System.currentTimeMillis();
 
@@ -101,14 +102,14 @@ public class GameFrame extends Frame {
 
     public void movePlayer(long win) {
         if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
-            player.move(0, 0.5f);
+            player.move(0, 1f);
         } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
-            player.move(0, -0.5f);
+            player.move(0, -1f);
         }
         if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
-            player.move(1f, 0);
+            player.move(2f, 0);
         } else if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
-            player.move(-1f, 0);
+            player.move(-2f, 0);
         }
     }
 
@@ -130,7 +131,7 @@ public class GameFrame extends Frame {
 
         float dx = x1 - x2;
         float dy = y1 - y2;
-        return dx * dx + dy * dy < radius * radius && dx * dx + dy * dy > radius1 * radius1;
+        return dx * dx + dy * dy < radius * radius/* && dx * dx + dy * dy > radius1 * radius1*/;
     }
 
     /*
@@ -150,7 +151,7 @@ public class GameFrame extends Frame {
 
                 //lastPlayerVisiblePoint = new Point(xx, yy);
 
-                npc.addPointToRoute(player.getCoordinates());
+                //npc.addPointToRoute(player.getCoordinates());
             } else {
                 //npc.removePointFromRoute(player.getCoordinates());
             }

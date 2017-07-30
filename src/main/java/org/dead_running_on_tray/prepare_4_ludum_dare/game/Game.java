@@ -13,6 +13,7 @@ import org.dead_running_on_tray.prepare_4_ludum_dare.game.frame.frame_state.Fram
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.ILocation;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLContext;
 
@@ -40,6 +41,10 @@ class Game {
             gameLoop();
         }
 
+        forEscape();
+    }
+
+    private void forEscape() {
         glfwTerminate();
         System.exit(0);
     }
@@ -158,6 +163,9 @@ class Game {
                 if (glfwGetKey(win, GLFW_KEY_ENTER) == GL_TRUE) {
                     frame.setFrameState(FrameState.TO_GAME);
                     System.out.println("FROM START TO GAME!!!!");
+                }
+                if (glfwGetKey(win, GLFW_KEY_ESCAPE) == GL_TRUE) {
+                    forEscape();
                 }
                 break;
             }

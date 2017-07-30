@@ -15,6 +15,10 @@ public class Player extends Character{
         this.setHealth(PLAYER_HEALTH);
     }
 
+    public Player(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        super(x, y, id, scale, scaleWidth, spritePath);
+    }
+
     public int getProgress() {
         return progress;
     }

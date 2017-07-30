@@ -35,6 +35,23 @@ public abstract class GameObject {
         normY = (float) y / SCREEN_HEIGHT;
     }
 
+    public GameObject(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        coordinates = new Point(x, y);
+        this.id = id;
+
+        try {
+            sprite = new Texture(spritePath);
+        } catch (Exception e) {
+            System.err.println("Error while reading sprite for game object!");
+            sprite = null;
+        }
+
+        unit_width = scaleWidth * getWidth() / SCREEN_WIDTH;
+        unit_height = scale * getHeight() / SCREEN_HEIGHT;
+        normX = (float) x / SCREEN_WIDTH;
+        normY = (float) y / SCREEN_HEIGHT;
+    }
+
     public int getId() {
         return id;
     }

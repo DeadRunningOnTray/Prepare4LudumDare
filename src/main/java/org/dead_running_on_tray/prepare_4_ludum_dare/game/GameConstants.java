@@ -9,17 +9,17 @@ public interface GameConstants {
     int PAUSE_FOR_MOVING = 60;
 
     int SCREEN_WIDTH = 800;
-    int SCREEN_HEIGHT = 600;
+    int SCREEN_HEIGHT = 500;
   
     ///int START_PLAYER_POS_X = -3 * SCREEN_WIDTH / 4;
    // int START_PLAYER_POS_Y = - SCREEN_WIDTH / 4;
 
     int PLAYER_PRIORITY = 2;
 
-    int BACKGROUND_SCALE = 4;
+    int BACKGROUND_SCALE = 2;
 
     int BACKGROUND_X = - SCREEN_WIDTH;
-    int BACKGROUND_Y = - 10 * SCREEN_HEIGHT / 4;
+    int BACKGROUND_Y = - 8 * SCREEN_HEIGHT / 4;
 
     int START_PLAYER_POS_X = - SCREEN_WIDTH / 2;//0;
     int START_PLAYER_POS_Y = 0;
@@ -34,7 +34,7 @@ public interface GameConstants {
     int NPC_DAMAGE = 45;
 
     float VISIBLE_AREA_RADIUS = 300.0f;
-    float INVISIBLE_AREA_RADIUS = 00.42f;
+    float INVISIBLE_AREA_RADIUS = 0.42f;
 
     int PLAYER_HEALTH = 2000;
     int NPC_HEALTH = 1000;

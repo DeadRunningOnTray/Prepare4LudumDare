@@ -16,16 +16,18 @@ public class Route {
         path.remove(p);
     }
 
-    private int nextIndex() {
+    private void nextIndex() {
         int size = path.size();
-        return ((size + (index + 1) % size) % size);
+        index %= size;
+        index++;
+        index = ((size + (index + 1) % size) % size);
     }
 
     public Point getCurrentDestination() {
         Point p = null;
         if (path.size() > 0) {
             p = path.get(index);
-            index = nextIndex();
+            nextIndex();
         } else {
             System.err.println("In getCurrentDestination()");
         }

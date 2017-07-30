@@ -28,6 +28,10 @@ public class NPC extends Character {
         this.route = route;
     }
 
+    public NPC(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        super(x, y, id, scale, scaleWidth, spritePath);
+    }
+
     /**
      * Custom constructor.
      * Parse text file that consists of lines of pairs "x,y".

@@ -14,6 +14,10 @@ public abstract class Character extends GameMovingObject {
         super(x, y, id, scale, spritePath);
     }
 
+    public Character(int x, int y, int id, int scale, int scaleWidth, String spritePath) {
+        super(x, y, id, scale, scaleWidth, spritePath);
+    }
+
     public int getHealth() {
         return health;
     }
