@@ -30,8 +30,6 @@ class Game {
     private static long win;
     private static State state = START_FRAME;// Default state.
 
-
-
     private Frame frame = new StartFrame();
 
     Game() {

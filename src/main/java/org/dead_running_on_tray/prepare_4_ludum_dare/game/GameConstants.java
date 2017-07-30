@@ -3,7 +3,6 @@ package org.dead_running_on_tray.prepare_4_ludum_dare.game;
 public interface GameConstants {
     String TITLE = "P4LD";
 
-    int JUMP_DURATION_MILLIS = 1000;
     int PAUSE_DELAY_MILLIS = 250;
 
     int PAUSE_FOR_MOVING = 60;
@@ -58,5 +57,4 @@ public interface GameConstants {
     String LOCATION_PACKAGE = "location/";
     String LOCATION_NAME = "start_location";
     String LOCATION_PATH = IMG_PACKAGE + LOCATION_PACKAGE + LOCATION_NAME + EXTENSION;
-
 }
