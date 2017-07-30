@@ -8,7 +8,7 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.S
 import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GameObject {
-    private int id;
+    protected int id;
     protected Point coordinates;
     private Texture sprite;
     protected boolean inversedX = false;
@@ -33,6 +33,30 @@ public abstract class GameObject {
         unit_height = scale * getHeight() / SCREEN_HEIGHT;
         normX = (float) x / SCREEN_WIDTH;
         normY = (float) y / SCREEN_HEIGHT;
+    }
+
+    public GameObject(float x, float y, int id, int scale, String spritePath) {
+        this.id = id;
+
+        try {
+            sprite = new Texture(spritePath);
+        } catch (Exception e) {
+            System.err.println("Error while reading sprite for game object!");
+            sprite = null;
+        }
+
+        unit_width = scale * getWidth();
+        unit_height = scale * getHeight();
+        normX = x;
+        normY = y;
+        coordinates = new Point(
+            x * SCREEN_WIDTH,
+            y * SCREEN_HEIGHT
+        );
+    }
+
+    public void inverseX() {
+        inversedX = !inversedX;
     }
 
     public int getId() {

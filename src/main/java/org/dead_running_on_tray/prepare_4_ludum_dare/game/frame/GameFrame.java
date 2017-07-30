@@ -1,5 +1,6 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.frame;
 
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.Bullet;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.Location;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
@@ -20,12 +21,13 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.logic.WinOrLose
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcRouteProcessor.*;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.NpcProcessor.*;
 
 public class GameFrame extends Frame {
     private Location location;
     private Player player;
     private ArrayList<NPC> npcs;
+    private ArrayList<Bullet> bullets;
 
     private long startTime;
     private long endTime;
@@ -57,6 +59,7 @@ public class GameFrame extends Frame {
             PLAYER_SCALE,
             PLAYER_PATH
         );
+        bullets = new ArrayList<>();
         npcs = new ArrayList<>();
         for (int i = 0; i < npcNames.length; i++) {
             //String s = npcPackage.concat(npcNames[i].concat(EXTENSION));
@@ -66,7 +69,8 @@ public class GameFrame extends Frame {
                 i,
                 NPC_SCALE,
                 PLAYER_PATH,
-                "src/main/resources/routes/test_route"));
+                "src/main/resources/routes/test_route"
+            ));
             //npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE));
         }
         //ArrayList<Point> points = new ArrayList<>();
@@ -90,6 +94,9 @@ public class GameFrame extends Frame {
             npc.draw();
         }
         player.draw();
+        for (Bullet b : bullets) {
+            b.draw();
+        }
     }
 
     private static int countOfTime(long start, long end) {
@@ -123,8 +130,14 @@ public class GameFrame extends Frame {
             player.move(-PLAYER_SPEED_X, 0);
         }
 
+        // Jump.
         if (player.isWalking() && glfwGetKey(win, GLFW_KEY_SPACE) == GL_TRUE) {
             player.jump();
+        }
+
+        // Attack.
+        if (glfwGetKey(win, GLFW_KEY_F) == GL_TRUE) {
+            bullets.add(player.shoot());
         }
 
         //this.draw();
@@ -167,4 +180,9 @@ public class GameFrame extends Frame {
         }
     }
 
+    public void moveBullets() {
+        for (Bullet b : bullets) {
+            b.move();
+        }
+    }
 }

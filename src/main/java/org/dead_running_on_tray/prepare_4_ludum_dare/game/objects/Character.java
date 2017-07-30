@@ -1,6 +1,10 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects;
 
+import org.dead_running_on_tray.prepare_4_ludum_dare.game.Bullet;
+
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.BULLET_PATH;
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.GameObjectsConstants.MAX_HEALTH;
+import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.BULLET_SCALE;
 
 /**
  * Game character.
@@ -39,5 +43,21 @@ public abstract class Character extends GameMovingObject {
             health += dh;
             isAlive = health > 0;
         }
+    }
+
+    public Bullet shoot() {
+        Bullet b = new Bullet(
+            getX() + getWidth(),
+            getY() + getHeight(),
+            id,
+            BULLET_SCALE,
+            BULLET_PATH
+        );
+
+        if (inversedX) {
+            b.inverseX();
+        }
+
+        return b;
     }
 }

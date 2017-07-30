@@ -1,24 +1,15 @@
 package org.dead_running_on_tray.prepare_4_ludum_dare.game;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*;
-import static org.dead_running_on_tray.prepare_4_ludum_dare.game.scale.Scale.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import static org.dead_running_on_tray.prepare_4_ludum_dare.game.State.*;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.frame.*;
 import org.dead_running_on_tray.prepare_4_ludum_dare.game.frame.frame_state.FrameState;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.location.ILocation;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.*;
-import org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.Character;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLContext;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 
 
 /**
@@ -190,6 +181,7 @@ class Game {
 
                 ((GameFrame) frame).movePlayer(win);
                 ((GameFrame) frame).moveNPCs(win);
+                ((GameFrame) frame).moveBullets();
 
                 try {
                     Thread.sleep(PAUSE_FOR_MOVING);

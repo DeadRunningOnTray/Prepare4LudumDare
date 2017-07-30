@@ -44,10 +44,15 @@ public interface GameConstants {
     String ENEMY_PART_PATH = IMG_PACKAGE + ENEMIES_PACKAGE + ENEMY_NAME + EXTENSION;
 
     String PLAYER_PACKAGE = "player/";
-    String PLAYER_NAME = "frame_1_sqr";
+    String PLAYER_NAME = "player_big";
     String PLAYER_PATH = IMG_PACKAGE + PLAYER_PACKAGE + PLAYER_NAME + EXTENSION;
 
     String LOCATION_PACKAGE = "location/";
     String LOCATION_NAME = "start_location";
     String LOCATION_PATH = IMG_PACKAGE + LOCATION_PACKAGE + LOCATION_NAME + EXTENSION;
+
+    String OTHER_OBJECTS_PACKAGE = "objects/";
+
+    String BULLET_NAME = "bullet";
+    String BULLET_PATH = IMG_PACKAGE + OTHER_OBJECTS_PACKAGE + BULLET_NAME + EXTENSION;
 }
