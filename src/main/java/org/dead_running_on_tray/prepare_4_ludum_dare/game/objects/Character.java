@@ -45,9 +45,6 @@ public abstract class Character extends GameMovingObject {
     }
 
     public void move(float dx, float dy) {
-        //player.getY() > LOW_BORDER
-        //player.getY() < HIGH_BORDER
-
         if (inversedX && dx > 0 || dx < 0 && !inversedX) {
             inversedX = !inversedX;
         }

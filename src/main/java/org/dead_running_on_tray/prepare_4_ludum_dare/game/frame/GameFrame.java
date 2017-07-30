@@ -119,35 +119,37 @@ public class GameFrame extends Frame {
     }
 
     public void movePlayer(long win) {
-        if (player.isWalking()) {
-            if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
-                player.move(0, PLAYER_SPEED_Y);
-            } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
-                player.move(0, -PLAYER_SPEED_Y);
+        if (player.isAlive()) {
+            if (player.isWalking()) {
+                if (glfwGetKey(win, GLFW_KEY_W) == GL_TRUE || glfwGetKey(win, GLFW_KEY_UP) == GL_TRUE) {
+                    player.move(0, PLAYER_SPEED_Y);
+                } else if (glfwGetKey(win, GLFW_KEY_S) == GL_TRUE || glfwGetKey(win, GLFW_KEY_DOWN) == GL_TRUE) {
+                    player.move(0, -PLAYER_SPEED_Y);
+                }
             }
+
+            if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
+                player.move(PLAYER_SPEED_X, 0);
+            } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
+                player.move(-PLAYER_SPEED_X, 0);
+            }
+
+            // Jump.
+            if (player.isWalking() && glfwGetKey(win, GLFW_KEY_SPACE) == GL_TRUE) {
+                player.jump();
+            }
+
+            // Attack.
+            if (glfwGetKey(win, GLFW_KEY_F) == GL_TRUE &&
+                (System.currentTimeMillis() - shootLastTime) > SHOT_DELAY_MILLIS) {
+                bullets.add(player.shoot());
+                shootLastTime = System.currentTimeMillis();
+            }
+
+            //this.draw();
+
+            PlayerJumpsProcessor.process(player);
         }
-
-        if (glfwGetKey(win, GLFW_KEY_D) == GL_TRUE || glfwGetKey(win, GLFW_KEY_RIGHT) == GL_TRUE) {
-            player.move(PLAYER_SPEED_X, 0);
-        } else if (glfwGetKey(win, GLFW_KEY_A) == GL_TRUE || glfwGetKey(win, GLFW_KEY_LEFT) == GL_TRUE) {
-            player.move(-PLAYER_SPEED_X, 0);
-        }
-
-        // Jump.
-        if (player.isWalking() && glfwGetKey(win, GLFW_KEY_SPACE) == GL_TRUE) {
-            player.jump();
-        }
-
-        // Attack.
-        if (glfwGetKey(win, GLFW_KEY_F) == GL_TRUE &&
-            (System.currentTimeMillis() - shootLastTime) > SHOT_DELAY_MILLIS) {
-            bullets.add(player.shoot());
-            shootLastTime = System.currentTimeMillis();
-        }
-
-        //this.draw();
-
-        PlayerJumpsProcessor.process(player);
     }
 
     /*
@@ -189,11 +191,14 @@ public class GameFrame extends Frame {
         BulletsProcessor.process(bullets);
     }
 
-    /*
     public void processDamage() {
         for (Bullet b : bullets) {
-            for (NPC npc)
+            for (NPC npc : npcs) {
+                if (npc.isAlive() &&
+                    b.getX() >= npc.getX() && b.getY() >= npc.getY()) {
+                    npc.decHealth(PLAYER_DAMAGE);
+                }
+            }
         }
     }
-    */
 }
