@@ -21,7 +21,7 @@ public class Enemy extends NPC {
 
     public void becomeAggressiveTo(Character c) {
         aggressive = true;
-        route.clear();
-        route.add(c.getCoordinates());
+        /*route.clear();
+        route.add(c.getCoordinates());*/
     }
 }

@@ -30,13 +30,18 @@ public class GameFrame extends Frame {
     private long startTime;
     private long endTime;
 
+    private Point lastPlayerVisiblePoint;
+    private long lastVisibleTime = -1;
+    private long now;
+
     //private ILocation.Option currentLocation = ILocation.Option.START;
     //private HashMap<ILocation.Option, ILocation> locationsMap;
 
     private Random random = new Random(/*42*/System.currentTimeMillis());
 
     private int getNPCBornX() {
-        return (random.nextBoolean() ? LEFT_BORN_ENEMY_SCREEN_WIDTH : RIGHT_BORN_ENEMY_SCREEN_WIDTH);
+        return RIGHT_BORN_ENEMY_SCREEN_WIDTH;
+        //return (random.nextBoolean() ? LEFT_BORN_ENEMY_SCREEN_WIDTH : RIGHT_BORN_ENEMY_SCREEN_WIDTH);
     }
 
     private int getNPCBornY() {
@@ -59,7 +64,7 @@ public class GameFrame extends Frame {
         npcs = new ArrayList<>();
         for (int i = 0; i < npcNames.length; i++) {
             //String s = npcPackage.concat(npcNames[i].concat(EXTENSION));
-            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, PLAYER_PATH));
+            npcs.add(new NPC(getNPCBornX(), getNPCBornY(), i, NPC_SCALE, ENEMY_PART_PATH));
         }
         npcs.get(0).addPointToRoute(new Point(0f, 0f));
         npcs.get(0).addPointToRoute(new Point(0.5f, 0.3f));
@@ -114,8 +119,15 @@ public class GameFrame extends Frame {
     public boolean isVisible(NPC npc, Character character, float radius, float radius1) {
         Point npcPoint = npc.getCoordinates();
         Point characterPoint = character.getCoordinates();
-        float x1 = npcPoint.getX(), x2 = characterPoint.getX();
-        float y1 = npcPoint.getY(), y2 = character.getY();
+
+        float npcHeight = npc.getUnit_height();
+        float npcWidth = npc.getUnit_width();
+        float characterHeight = character.getUnit_height();
+        float characterWidth = character.getUnit_width();
+
+        float x1 = npcPoint.getX() - npcWidth / 2, x2 = characterPoint.getX() - characterWidth / 2;
+        float y1 = npcPoint.getY() - npcHeight / 2, y2 = character.getY() - characterHeight / 2;
+
         float dx = x1 - x2;
         float dy = y1 - y2;
         return dx * dx + dy * dy < radius * radius && dx * dx + dy * dy > radius1 * radius1;
@@ -128,17 +140,22 @@ public class GameFrame extends Frame {
     public void moveNPCs(long win) {
         for (NPC npc : npcs) {
 
-            //Point playerPoint = player.getCoordinates();
-
             // todo
             // make method for visible area of NPC
 
             if (isVisible(npc, player, VISIBLE_AREA_RADIUS, INVISIBLE_AREA_RADIUS)) {
+                Point playerCurrentPoint = player.getCoordinates();
+
+                float xx = playerCurrentPoint.getX(), yy = playerCurrentPoint.getY();
+
+                //lastPlayerVisiblePoint = new Point(xx, yy);
+
                 npc.addPointToRoute(player.getCoordinates());
+            } else {
+                //npc.removePointFromRoute(player.getCoordinates());
             }
 
             process(npc);
-
         }
     }
 

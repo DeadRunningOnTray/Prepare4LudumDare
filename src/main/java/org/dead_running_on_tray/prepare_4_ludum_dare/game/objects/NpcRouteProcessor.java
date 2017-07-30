@@ -6,7 +6,8 @@ public class NpcRouteProcessor {
         float dy = npc.getY() - npc.getCurrentDestination().getY();
 
         if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
-            npc.nextPoint();
+            npc.getCurrentDestination();
+            //npc.nextPoint();
         }
 
         if ((int) dx > 0) {

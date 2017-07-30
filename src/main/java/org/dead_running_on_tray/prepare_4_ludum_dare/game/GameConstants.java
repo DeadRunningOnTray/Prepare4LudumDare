@@ -14,6 +14,7 @@ public interface GameConstants {
     ///int START_PLAYER_POS_X = -3 * SCREEN_WIDTH / 4;
    // int START_PLAYER_POS_Y = - SCREEN_WIDTH / 4;
 
+    int PLAYER_PRIORITY = 2;
 
     int BACKGROUND_SCALE = 4;
 
@@ -32,8 +33,8 @@ public interface GameConstants {
     int PLAYER_DAMAGE = 42;
     int NPC_DAMAGE = 45;
 
-    float VISIBLE_AREA_RADIUS = 42.42f;
-    float INVISIBLE_AREA_RADIUS = 10.42f;
+    float VISIBLE_AREA_RADIUS = 300.0f;
+    float INVISIBLE_AREA_RADIUS = 00.42f;
 
     int PLAYER_HEALTH = 2000;
     int NPC_HEALTH = 1000;

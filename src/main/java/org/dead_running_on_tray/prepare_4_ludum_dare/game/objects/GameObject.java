@@ -59,6 +59,22 @@ public abstract class GameObject {
         return sprite.getHeight();
     }
 
+    public float getUnit_width() {
+        return unit_width;
+    }
+
+    public void setUnit_width(float unit_width) {
+        this.unit_width = unit_width;
+    }
+
+    public float getUnit_height() {
+        return unit_height;
+    }
+
+    public void setUnit_height(float unit_height) {
+        this.unit_height = unit_height;
+    }
+
     public Texture getSprite() {
         return sprite;
     }

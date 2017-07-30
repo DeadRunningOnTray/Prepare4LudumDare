@@ -2,7 +2,7 @@ package org.dead_running_on_tray.prepare_4_ludum_dare.game.objects.route;
 
 public class Point {
     private float x, y;
-    private int priority;
+    private int priority = 0;
 
     public Point(float x, float y) {
         this.x = x;
