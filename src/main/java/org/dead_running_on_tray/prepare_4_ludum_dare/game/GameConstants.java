@@ -47,7 +47,7 @@ public interface GameConstants {
     String BACKGROUND_PATH = IMG_PACKAGE + BACKGROUND_PACKAGE + BACKGROUND_NAME + EXTENSION;
 
     String ENEMIES_PACKAGE = "enemies/";
-    String ENEMY_NAME = "enemy0";
+    String ENEMY_NAME = "enemy1";
     String ENEMY_PART_PATH = IMG_PACKAGE + ENEMIES_PACKAGE + ENEMY_NAME + EXTENSION;
 
     String PLAYER_PACKAGE = "player/";
