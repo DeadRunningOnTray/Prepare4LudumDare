@@ -69,6 +69,7 @@ public class NPC extends Character {
     }
 
     public Point getCurrentDestination() {
+        int n = 0;
         return route.get(currentDestination);
     }
 
