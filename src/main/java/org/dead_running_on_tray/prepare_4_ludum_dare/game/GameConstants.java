@@ -51,5 +51,4 @@ public interface GameConstants {
     String LOCATION_PACKAGE = "location/";
     String LOCATION_NAME = "start_location";
     String LOCATION_PATH = IMG_PACKAGE + LOCATION_PACKAGE + LOCATION_NAME + EXTENSION;
-
 }

@@ -5,7 +5,14 @@ import static org.dead_running_on_tray.prepare_4_ludum_dare.game.GameConstants.*
  * Game player class.
  */
 public class Player extends Character{
+    private enum Dynamics {
+        WALK,
+        JUMP,
+        FALL
+    }
+
     private int progress = 0;
+    private Dynamics dyn = Dynamics.WALK;
 
     public Player(int x, int y, int id, int scale, String spritePath) {
         super(x, y, id, scale, spritePath);
@@ -23,5 +30,21 @@ public class Player extends Character{
 
     public void incProgress(int work) {
         progress += work;
+    }
+
+    public void jump() {
+        dyn = Dynamics.JUMP;
+    }
+
+    public boolean isWalking() {
+        return dyn == Dynamics.WALK;
+    }
+
+    public boolean isInJump() {
+        return dyn == Dynamics.JUMP;
+    }
+
+    public boolean isFalling() {
+        return dyn == Dynamics.FALL;
     }
 }
