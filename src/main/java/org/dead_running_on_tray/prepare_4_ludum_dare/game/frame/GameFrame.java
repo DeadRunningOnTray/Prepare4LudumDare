@@ -186,13 +186,13 @@ public class GameFrame extends Frame {
 
                     System.out.println("VISIBLE!");
                     npc.addVisiblePoint(lastPlayerVisiblePoint);
+                } else {
+                    System.out.println("INVISIBLE!!!");
+                    npc.removeInvisiblePoint(lastPlayerVisiblePoint);
                 }
-            } else {
-                System.out.println("INVISIBLE!!!");
-                npc.removeInvisiblePoint(lastPlayerVisiblePoint);
-            }
 
-            NpcProcessor.process(npc);
+                NpcProcessor.process(npc);
+            }
         }
     }
 
